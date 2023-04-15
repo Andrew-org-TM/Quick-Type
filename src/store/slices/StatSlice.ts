@@ -20,6 +20,13 @@ export interface Stat {
   userId?: number;
 }
 
+export interface KeyPresses {
+  correct: number;
+  incorrect: number;
+  skipped: number;
+  extra: number;
+}
+
 interface InitStatState {
   timeElapsed: number;
   timerActive: boolean;
@@ -145,7 +152,7 @@ const StatSlice = createSlice({
     pushScore(state: InitStatState, action: PayloadAction<ScoreTracker>) {
       state.score.push(action.payload);
     },
-    setLastTast(state: InitStatState, action: PayloadAction<Stat>) {
+    setLastTest(state: InitStatState, action: PayloadAction<Stat>) {
       state.lastTest = action.payload;
     },
     setIncorrectKeys(state: InitStatState, action: PayloadAction<number>) {
@@ -177,7 +184,7 @@ export const {
   adjustAccuracy,
   adjustRaw,
   pushScore,
-  setLastTast,
+  setLastTest,
   setIncorrectKeys,
 } = StatSlice.actions;
 
