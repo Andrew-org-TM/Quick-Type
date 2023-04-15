@@ -8,6 +8,8 @@ const KeysPieChart = () => {
     localStorage.getItem('keyPresses') || '{}'
   );
 
+  console.log(window.innerWidth);
+
   const data = [
     {
       id: 'Correct',
@@ -32,83 +34,80 @@ const KeysPieChart = () => {
   ];
 
   return (
-    <div className="h-96">
-      <div className="h-full w-1/2">
-        <ResponsivePie
-          data={data}
-          margin={{ top: 19, right: 50, bottom: 19, left: 0 }}
-          valueFormat=" >-"
-          theme={{
-            grid: {
-              line: {
-                stroke: '#fff',
-              },
-            },
-            labels: {
-              text: {
-                fill: '#fff',
-              },
-            },
-            tooltip: {
-              container: {
-                color: '#0f0f0f',
-              },
-            },
-            legends: {
-              text: {
-                fill: '#fff',
-                color: '#fff',
-              },
-            },
-            annotations: {
-              text: {
-                fill: '#fff',
-              },
-            },
-          }}
-          innerRadius={0.5}
-          activeOuterRadiusOffset={8}
-          // colors={['#4c934c', '#cd4631', '#81ADC8', '#f7cb15']}
-          colors={['#315c2b', '#9e2a2b', '#81ADC8', '#335c67']}
-          borderWidth={1}
-          borderColor={{
-            from: 'color',
-            modifiers: [['darker', 0.2]],
-          }}
-          arcLinkLabelsSkipAngle={10}
-          arcLinkLabelsTextColor="#fff"
-          arcLinkLabelsThickness={2}
-          arcLinkLabelsColor={{ from: 'color' }}
-          arcLabelsSkipAngle={10}
-          legends={[
+    <ResponsivePie
+      data={data}
+      margin={{ top: 19, right: 50, bottom: 19, left: 10 }}
+      valueFormat=" >-"
+      theme={{
+        grid: {
+          line: {
+            stroke: '#fff',
+          },
+        },
+        labels: {
+          text: {
+            fill: '#fff',
+          },
+        },
+        tooltip: {
+          container: {
+            color: '#0f0f0f',
+          },
+        },
+        legends: {
+          text: {
+            fill: '#fff',
+            color: '#fff',
+          },
+        },
+        annotations: {
+          text: {
+            fill: '#fff',
+          },
+        },
+      }}
+      innerRadius={0.5}
+      activeOuterRadiusOffset={8}
+      // colors={['#4c934c', '#cd4631', '#81ADC8', '#f7cb15']}
+      colors={['#315c2b', '#9e2a2b', '#81ADC8', '#335c67']}
+      borderWidth={1}
+      borderColor={{
+        from: 'color',
+        modifiers: [['darker', 0.2]],
+      }}
+      arcLinkLabelsSkipAngle={10}
+      arcLinkLabelsTextColor="#fff"
+      arcLinkLabelsThickness={2}
+      arcLinkLabelsColor={{ from: 'color' }}
+      arcLabelsSkipAngle={10}
+      enableArcLinkLabels={false}
+      legends={[
+        {
+          anchor: 'bottom-right',
+          direction: 'row',
+          justify: false,
+          translateX: 40,
+          translateY: 0,
+          itemsSpacing: 70,
+          itemWidth: 10,
+          itemHeight: 18,
+          itemTextColor: '#f0f0f0',
+          itemDirection: 'right-to-left',
+          itemOpacity: 1,
+          symbolSize: 18,
+          symbolShape: 'square',
+          symbolSpacing: 7,
+          effects: [
             {
-              anchor: 'top-right',
-              direction: 'column',
-              justify: false,
-              translateX: -60,
-              translateY: 0,
-              itemsSpacing: 7,
-              itemWidth: 10,
-              itemHeight: 18,
-              itemTextColor: '#f0f0f0',
-              itemDirection: 'right-to-left',
-              itemOpacity: 1,
-              symbolSize: 18,
-              symbolShape: 'square',
-              symbolSpacing: 7,
-              effects: [
-                {
-                  on: 'hover',
-                  style: {
-                    itemTextColor: '#fff',
-                  },
-                },
-              ],
+              on: 'hover',
+              style: {
+                itemTextColor: '#fff',
+              },
             },
-          ]}
-        />
-      </div>
-    </div>
+          ],
+        },
+      ]}
+    />
   );
 };
 

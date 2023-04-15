@@ -17,7 +17,7 @@ const NavBar = () => {
 
   return (
     <div className="text-white">
-      <nav className="px-6 py-3 flex justify-between">
+      <nav className="px-6 pt-3 flex justify-between">
         <Link to={'/'}>
           <div className="flex items-center gap-4">
             <img src={keyboardIcon} alt="Keyboard icon" />

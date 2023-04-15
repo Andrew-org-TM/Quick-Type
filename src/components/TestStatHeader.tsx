@@ -90,10 +90,10 @@ const TestStatHeader = () => {
           currentScores,
           dispatch,
           wordsPerMin,
-          raw,
           errors,
           startingTime - countdownTimer,
-          pushScore
+          pushScore,
+          totalKeysPressed
         );
         setWpm(Math.floor(stateWpm));
       }
@@ -105,10 +105,10 @@ const TestStatHeader = () => {
           currentScores,
           dispatch,
           wordsPerMin,
-          raw,
           errors,
           timeElapsed,
-          pushScore
+          pushScore,
+          totalKeysPressed
         );
 
         setWpm(Math.floor(stateWpm));
@@ -146,10 +146,10 @@ const TestStatHeader = () => {
         currentScores,
         dispatch,
         wordsPerMin,
-        raw,
         errors,
         useCountdown ? startingTime - countdownTimer : timeElapsed,
-        pushScore
+        pushScore,
+        totalKeysPressed
       );
       localStorage.setItem('lineData', JSON.stringify(currentScores));
       localStorage.setItem(
