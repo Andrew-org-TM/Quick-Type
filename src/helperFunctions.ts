@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from './store';
-import { ScoreTracker, pushScore } from './store/slices/StatSlice';
+import { KeyPresses, ScoreTracker, pushScore } from './store/slices/StatSlice';
 
 ////////////////////////////////////////////////////////////////////////////////////
 function CalculateWPM(
@@ -95,6 +95,28 @@ function incorrectKeyPresses(
 ): number {
   const skippedChars = excessQuoteToType?.match(/[%]/g)?.length;
   return skippedChars ? incorrectKeys - skippedChars : incorrectKeys;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+function keyPressData(
+  userTextInput: string,
+  excessQuoteToType: string,
+  incorrectKeys: number,
+  quoteToType: string
+): KeyPresses {
+  const skipped = excessQuoteToType.match(/[%#]/g)?.length || 0;
+
+  const extra = excessQuoteToType.match(/[~]/g)?.length || 0;
+
+  const incorrect =
+    userTextInput.split('').filter((char, idx) => {
+      return char !== quoteToType[idx];
+    }).length - skipped;
+  const correct =
+    userTextInput.split('').filter((char, idx) => char === quoteToType[idx])
+      .length - extra;
+
+  return { skipped, extra, incorrect, correct };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -273,6 +295,7 @@ export {
   calculateRaw,
   incorrectKeyPresses,
   addScoreToState,
+  keyPressData,
 };
 
 export const allWordsList = [
