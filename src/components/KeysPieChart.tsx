@@ -69,7 +69,7 @@ const KeysPieChart = () => {
       innerRadius={0.5}
       activeOuterRadiusOffset={8}
       // colors={['#4c934c', '#cd4631', '#81ADC8', '#f7cb15']}
-      colors={['#315c2b', '#9e2a2b', '#81ADC8', '#335c67']}
+      colors={['#568259', '#9e2a2b', '#81ADC8', '#335c67']}
       borderWidth={1}
       borderColor={{
         from: 'color',

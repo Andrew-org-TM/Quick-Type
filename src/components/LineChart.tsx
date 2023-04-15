@@ -80,7 +80,7 @@ const LineChart = () => {
           },
         },
       }}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 80, bottom: 50, left: 60 }}
       enableGridX={false}
       enableGridY={false}
       xScale={{ type: 'linear' }}
@@ -92,7 +92,7 @@ const LineChart = () => {
         reverse: false,
       }}
       yFormat=" >-.2f"
-      curve="catmullRom"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       axisBottom={{
@@ -111,7 +111,7 @@ const LineChart = () => {
         legendOffset: -45,
         legendPosition: 'middle',
       }}
-      colors={{ scheme: 'set3' }}
+      colors={['#1c7ed6', 'hsl(105, 0%, 40%)']}
       pointSize={5}
       pointBorderWidth={2}
       pointBorderColor={{ from: 'serieColor' }}
