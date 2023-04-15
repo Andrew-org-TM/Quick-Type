@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from './store';
-import { ScoreTracker, pushScore } from './store/slices/StatSlice';
+import { KeyPresses, ScoreTracker, pushScore } from './store/slices/StatSlice';
 
 ////////////////////////////////////////////////////////////////////////////////////
 function CalculateWPM(
@@ -98,6 +98,28 @@ function incorrectKeyPresses(
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
+function keyPressData(
+  userTextInput: string,
+  excessQuoteToType: string,
+  incorrectKeys: number,
+  quoteToType: string
+): KeyPresses {
+  const skipped = excessQuoteToType.match(/[%#]/g)?.length || 0;
+
+  const extra = excessQuoteToType.match(/[~]/g)?.length || 0;
+
+  const incorrect =
+    userTextInput.split('').filter((char, idx) => {
+      return char !== quoteToType[idx];
+    }).length - skipped;
+  const correct =
+    userTextInput.split('').filter((char, idx) => char === quoteToType[idx])
+      .length - extra;
+
+  return { skipped, extra, incorrect, correct };
+}
+
+////////////////////////////////////////////////////////////////////////////////////
 
 function incorrectCharsInCurrentWord(
   reassignWord: string,
@@ -121,12 +143,18 @@ function addScoreToState(
   currentScores: ScoreTracker[],
   dispatch: AppDispatch,
   wpm: number,
-  raw: number,
   errors: number,
   time: number,
-  func: typeof pushScore
+  func: typeof pushScore,
+  totalKeysPressed: number
 ): void {
   const recentErrors = currentScores.reduce((acc, cv) => acc + cv.errors, 0);
+
+  const raw =
+    (totalKeysPressed -
+      currentScores[currentScores.length - 1].totalKeysPressed) /
+    5 /
+    (1 / 60);
 
   dispatch(
     func({
@@ -134,6 +162,7 @@ function addScoreToState(
       wpm,
       errors: errors - recentErrors,
       time,
+      totalKeysPressed,
     })
   );
 }
@@ -273,6 +302,7 @@ export {
   calculateRaw,
   incorrectKeyPresses,
   addScoreToState,
+  keyPressData,
 };
 
 export const allWordsList = [

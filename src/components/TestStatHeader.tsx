@@ -28,6 +28,7 @@ import {
   addScoreToState,
   calculateRaw,
   incorrectKeyPresses,
+  keyPressData,
 } from '../helperFunctions';
 
 const TestStatHeader = () => {
@@ -89,10 +90,10 @@ const TestStatHeader = () => {
           currentScores,
           dispatch,
           wordsPerMin,
-          raw,
           errors,
           startingTime - countdownTimer,
-          pushScore
+          pushScore,
+          totalKeysPressed
         );
         setWpm(Math.floor(stateWpm));
       }
@@ -104,10 +105,10 @@ const TestStatHeader = () => {
           currentScores,
           dispatch,
           wordsPerMin,
-          raw,
           errors,
           timeElapsed,
-          pushScore
+          pushScore,
+          totalKeysPressed
         );
 
         setWpm(Math.floor(stateWpm));
@@ -145,10 +146,22 @@ const TestStatHeader = () => {
         currentScores,
         dispatch,
         wordsPerMin,
-        raw,
         errors,
         useCountdown ? startingTime - countdownTimer : timeElapsed,
-        pushScore
+        pushScore,
+        totalKeysPressed
+      );
+      localStorage.setItem('lineData', JSON.stringify(currentScores));
+      localStorage.setItem(
+        'keyPresses',
+        JSON.stringify(
+          keyPressData(
+            userTextInput,
+            excessQuoteToType,
+            incorrectKeys,
+            quoteToType
+          )
+        )
       );
     }
   }, [testComplete]);
@@ -161,7 +174,7 @@ const TestStatHeader = () => {
       </div>
       <div className="flex flex-col items-center text-3xl sm:text-4xl">
         <h3>{useCountdown ? 'Time Remaining' : 'Time Elapsed'}</h3>
-        <p className="text-yellow-400">
+        <p className="text-[#3E92CC]">
           {useCountdown ? Math.floor(countdownTimer) : Math.floor(timeElapsed)}
         </p>
       </div>

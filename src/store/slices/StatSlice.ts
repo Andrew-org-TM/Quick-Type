@@ -20,6 +20,13 @@ export interface Stat {
   userId?: number;
 }
 
+export interface KeyPresses {
+  correct: number;
+  incorrect: number;
+  skipped: number;
+  extra: number;
+}
+
 interface InitStatState {
   timeElapsed: number;
   timerActive: boolean;
@@ -42,6 +49,7 @@ export interface ScoreTracker {
   wpm: number;
   raw: number;
   time: number;
+  totalKeysPressed: number;
 }
 
 const initialState: InitStatState = {
@@ -57,7 +65,7 @@ const initialState: InitStatState = {
   accuracy: 0,
   skippedCharacters: 0,
   raw: 0,
-  score: [{ errors: 0, wpm: 0, raw: 0, time: 0 }],
+  score: [{ errors: 0, wpm: 0, raw: 0, time: 0, totalKeysPressed: 0 }],
   lastTest: {
     accuracy: 0,
     wpm: 0,
@@ -110,7 +118,9 @@ const StatSlice = createSlice({
       state.countdownTimer = state.startingTime;
       state.lastTest = undefined;
       state.wpm = 0;
-      state.score = [{ errors: 0, wpm: 0, raw: 0, time: 0 }];
+      state.score = [
+        { errors: 0, wpm: 0, raw: 0, time: 0, totalKeysPressed: 0 },
+      ];
     },
     incrementIncorrectKeys(state, action: PayloadAction<number>) {
       state.incorrectKeys += action.payload;
@@ -145,7 +155,7 @@ const StatSlice = createSlice({
     pushScore(state: InitStatState, action: PayloadAction<ScoreTracker>) {
       state.score.push(action.payload);
     },
-    setLastTast(state: InitStatState, action: PayloadAction<Stat>) {
+    setLastTest(state: InitStatState, action: PayloadAction<Stat>) {
       state.lastTest = action.payload;
     },
     setIncorrectKeys(state: InitStatState, action: PayloadAction<number>) {
@@ -177,7 +187,7 @@ export const {
   adjustAccuracy,
   adjustRaw,
   pushScore,
-  setLastTast,
+  setLastTest,
   setIncorrectKeys,
 } = StatSlice.actions;
 

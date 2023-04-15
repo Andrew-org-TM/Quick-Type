@@ -17,13 +17,13 @@ const NavBar = () => {
 
   return (
     <div className="text-white">
-      <nav className="px-6 py-3 flex justify-between">
+      <nav className="px-6 pt-3 flex justify-between">
         <Link to={'/'}>
           <div className="flex items-center gap-4">
             <img src={keyboardIcon} alt="Keyboard icon" />
             <h1 className="text-4xl text-white font-bold tracking-wide">
               QuickType
-              <span className="text-sm text-gray-400">(beta v0.2)</span>
+              <span className="text-sm text-gray-400">(beta v0.3)</span>
             </h1>
           </div>
         </Link>

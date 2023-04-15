@@ -67,6 +67,7 @@ const TypeBoxText = () => {
         setCursorXPos(
           quote?.children[userTextInput.length]?.getBoundingClientRect().x
         );
+      setCursorYPos(quote?.children[0]?.getBoundingClientRect().y || 0);
     }, 0);
   }, []);
 

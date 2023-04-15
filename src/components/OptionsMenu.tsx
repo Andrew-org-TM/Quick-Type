@@ -9,11 +9,14 @@ import {
   resetStats,
   selectLanguage,
   selectStartingTime,
+  selectCountdownTimer,
+  selectTimeElapsed,
 } from '../store/slices/StatSlice';
 import OptionButton from './OptionButton';
 import {
   resetUserInput,
   selectNumOfWordsToType,
+  selectTestComplete,
   setTestWords,
 } from '../store/slices/TypeInputSlice';
 
@@ -45,6 +48,9 @@ const OptionsMenu = () => {
   const testLanguage = useAppSelector(selectLanguage);
   const startingTime = useAppSelector(selectStartingTime);
   const numberofWordsToType = useAppSelector(selectNumOfWordsToType);
+  const testComplete = useAppSelector(selectTestComplete);
+  const countdownTimer = useAppSelector(selectCountdownTimer);
+  const timeElapsed = useAppSelector(selectTimeElapsed);
 
   const dispatch = useAppDispatch();
 
@@ -55,7 +61,7 @@ const OptionsMenu = () => {
 
   const [languages, setLanguages] = useState<LanguageState>({
     activeLanguage: testLanguage,
-    languages: [{ id: 'English' }, { id: 'HTML' }, { id: 'JavaScript' }],
+    languages: [{ id: 'English' }, { id: 'JavaScript' }, { id: 'HTML' }],
   });
   const [times, setTimes] = useState<TimeState>({
     activeTime: startingTime,
@@ -98,12 +104,35 @@ const OptionsMenu = () => {
     dispatch(setTestWords(id));
   }
 
+  console.log('show?', timeElapsed !== 0 || countdownTimer !== startingTime);
+
   return (
-    <div className="flex justify-center max-w-3xl mx-auto py-8 text-white">
-      <div className="max-w-[256px] hidden sm:block">
+    <div
+      className={`flex justify-center max-w-3xl mx-auto py-8 text-white gap-4 transition-all duration-500 ${
+        timeElapsed !== 0 || countdownTimer !== startingTime
+          ? 'opacity-0 '
+          : 'opacity-100'
+      }`}
+    >
+      <SingleOption>
+        <h4 className="text-xl">Mode</h4>
+        <div className="flex gap-3">
+          {modes.modes.map((mode) => (
+            <OptionButton
+              id={mode.id}
+              clickFunc={toggleMode}
+              key={mode.id}
+              selected={mode.id === modes.activeMode}
+            >
+              {mode.id}
+            </OptionButton>
+          ))}
+        </div>
+      </SingleOption>
+      <div className="hidden sm:block">
         <SingleOption>
-          <h4 className="">Language</h4>
-          <div className="flex gap-5">
+          <h4 className="text-xl">Language</h4>
+          <div className="flex gap-3 ">
             {languages.languages.map((language) => (
               <OptionButton
                 id={language.id}
@@ -118,23 +147,8 @@ const OptionsMenu = () => {
         </SingleOption>
       </div>
       <SingleOption>
-        <h4 className="">Mode</h4>
-        <div className="flex gap-5">
-          {modes.modes.map((mode) => (
-            <OptionButton
-              id={mode.id}
-              clickFunc={toggleMode}
-              key={mode.id}
-              selected={mode.id === modes.activeMode}
-            >
-              {mode.id}
-            </OptionButton>
-          ))}
-        </div>
-      </SingleOption>
-      <SingleOption>
-        <h4 className="">{useCountdown ? 'Time' : 'Words'}</h4>
-        <div className="flex gap-5">
+        <h4 className="text-xl">{useCountdown ? 'Time' : 'Words'}</h4>
+        <div className="flex gap-3">
           {useCountdown
             ? times.times.map((time) => (
                 <OptionButton

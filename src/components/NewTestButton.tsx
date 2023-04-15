@@ -36,7 +36,7 @@ const NewTestButton = () => {
 
   return (
     <button
-      className="border-2 px-6 py-2 rounded-lg my-5 mx-auto block"
+      className="border-2 px-6 py-2 rounded-lg my-5 mx-auto block hover:bg-gray-700 active:bg-gray-700 transition-all"
       onClick={() => {
         dispatch(setUserTextInput(''));
         dispatch(setQuoteToType(duplicateQuoteToType));
@@ -52,7 +52,7 @@ const NewTestButton = () => {
         navigate('/');
       }}
     >
-      Reset Test
+      New Test
     </button>
   );
 };
