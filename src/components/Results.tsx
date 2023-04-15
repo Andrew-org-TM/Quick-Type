@@ -9,7 +9,7 @@ import {
   adjustWpm,
   adjustAccuracy,
   adjustRaw,
-  setLastTast,
+  setLastTest,
   setIncorrectKeys,
 } from '../store/slices/StatSlice';
 import SingleResult from './SingleResult';
@@ -23,7 +23,7 @@ const Results = () => {
 
   useEffect(() => {
     const lastTest: Stat = JSON.parse(localStorage.getItem('lastTest') || '{}');
-    dispatch(setLastTast(lastTest));
+    dispatch(setLastTest(lastTest));
     if (!wpm) {
       dispatch(adjustWpm(lastTest.wpm));
       dispatch(adjustAccuracy(lastTest.accuracy));

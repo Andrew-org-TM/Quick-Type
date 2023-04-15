@@ -6,6 +6,7 @@ import {
   CalculateWPM,
   calculateAccuracy,
   calculateRaw,
+  keyPressData,
 } from '../helperFunctions';
 import { dataState } from '../store/slices/AuthSlice';
 import {
@@ -32,6 +33,7 @@ import {
   selectUserTextInput,
   selectDuplicateQuoteToType,
   setTestComplete,
+  selectExcessQuoteToType,
 } from '../store/slices/TypeInputSlice';
 
 const Timer = () => {
@@ -41,6 +43,7 @@ const Timer = () => {
   const [timeRemaining, setTimeRemaining] = useState(15);
 
   const userData = useAppSelector(dataState);
+  const excessQuoteToType = useAppSelector(selectExcessQuoteToType);
   const timeElapsed = useAppSelector(selectTimeElapsed);
   const timerActive = useAppSelector(selectTimerActive);
   const quoteToType = useAppSelector(selectQuoteToType);

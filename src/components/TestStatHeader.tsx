@@ -28,6 +28,7 @@ import {
   addScoreToState,
   calculateRaw,
   incorrectKeyPresses,
+  keyPressData,
 } from '../helperFunctions';
 
 const TestStatHeader = () => {
@@ -149,6 +150,18 @@ const TestStatHeader = () => {
         errors,
         useCountdown ? startingTime - countdownTimer : timeElapsed,
         pushScore
+      );
+      localStorage.setItem('lineData', JSON.stringify(currentScores));
+      localStorage.setItem(
+        'keyPresses',
+        JSON.stringify(
+          keyPressData(
+            userTextInput,
+            excessQuoteToType,
+            incorrectKeys,
+            quoteToType
+          )
+        )
       );
     }
   }, [testComplete]);
