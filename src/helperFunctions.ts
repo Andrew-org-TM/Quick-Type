@@ -143,12 +143,18 @@ function addScoreToState(
   currentScores: ScoreTracker[],
   dispatch: AppDispatch,
   wpm: number,
-  raw: number,
   errors: number,
   time: number,
-  func: typeof pushScore
+  func: typeof pushScore,
+  totalKeysPressed: number
 ): void {
   const recentErrors = currentScores.reduce((acc, cv) => acc + cv.errors, 0);
+
+  const raw =
+    (totalKeysPressed -
+      currentScores[currentScores.length - 1].totalKeysPressed) /
+    5 /
+    (1 / 60);
 
   dispatch(
     func({
@@ -156,6 +162,7 @@ function addScoreToState(
       wpm,
       errors: errors - recentErrors,
       time,
+      totalKeysPressed,
     })
   );
 }
