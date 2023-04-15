@@ -137,9 +137,6 @@ const InputForm = () => {
       <OptionsMenu />
       <div className="flex flex-col gap-4 text-white">
         {useCountdown ? <Countdown /> : <Timer />}
-        <h1 style={{ visibility: testComplete ? 'visible' : 'hidden' }}>
-          Test Complete
-        </h1>
         <div
           id="test-box"
           className={`relative px-8 text-3xl self-start border-2 border-transparent min-w-full h-28 overflow-hidden`}
