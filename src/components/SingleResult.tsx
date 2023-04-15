@@ -7,9 +7,11 @@ interface ResultProps {
 
 const SingleResult = (props: ResultProps) => {
   return (
-    <div className="h-24 bg-[#3a3f45] flex flex-col items-center gap-2 justify-center hover:bg-white  ease-in transition-all text-center">
-      <h2 className="font-bold text-3xl">{props.statName}</h2>
-      <p className="text-2xl sm:text-4xl font-bold text-[#FFFFB3]">
+    <div className="h-24 bg-[#3a3f45] hover:bg-gray-700 lg:hover:scale-105 col-span-2 md:col-auto hover:rounded flex flex-col items-center gap-2 justify-center ease-in transition-all duration-75 text-center">
+      <h2 className="font-bold text-xl sm:text-3xl text-[#3E92CC]">
+        {props.statName}
+      </h2>
+      <p className="text-lg sm:text-2xl  font-bold text-gray-200">
         {props.stat}
       </p>
     </div>
