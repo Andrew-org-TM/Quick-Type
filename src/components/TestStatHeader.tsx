@@ -174,7 +174,7 @@ const TestStatHeader = () => {
       </div>
       <div className="flex flex-col items-center text-3xl sm:text-4xl">
         <h3>{useCountdown ? 'Time Remaining' : 'Time Elapsed'}</h3>
-        <p className="text-yellow-400">
+        <p className="text-[#3E92CC]">
           {useCountdown ? Math.floor(countdownTimer) : Math.floor(timeElapsed)}
         </p>
       </div>
