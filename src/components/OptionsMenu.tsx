@@ -104,8 +104,6 @@ const OptionsMenu = () => {
     dispatch(setTestWords(id));
   }
 
-  console.log('show?', timeElapsed !== 0 || countdownTimer !== startingTime);
-
   return (
     <div
       className={`flex justify-center max-w-3xl mx-auto py-8 text-white gap-4 transition-all duration-500 ${

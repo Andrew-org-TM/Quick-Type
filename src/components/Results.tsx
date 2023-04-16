@@ -36,8 +36,8 @@ const Results = () => {
 
   return (
     <section className="text-gray-300 flex flex-col items-center w-full px-4">
-      <div className="w-full">
-        <h1 className="text-center text-5xl my-6">Test Stats</h1>
+      <div className="w-full py-8">
+        {/* <h1 className="text-center text-5xl my-6">Test Stats</h1> */}
         <div className="grid grid-cols-6 md:grid-cols-3 lg:grid-cols-7 auto-rows-min gap-2 px-2 text-black w-full">
           <SingleResult stat={lastTest.language} statName="Language" />
           <SingleResult stat={lastTest.timeElapsed} statName="Time" />

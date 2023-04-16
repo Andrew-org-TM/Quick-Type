@@ -167,7 +167,14 @@ const TestStatHeader = () => {
   }, [testComplete]);
 
   return (
-    <div className="text-center px-4 flex justify-center text-white gap-16 items-center">
+    <div
+      className="text-center px-4 flex justify-center text-white gap-16 items-center transition-all duration-500"
+      style={{
+        transform: `translate(0,${
+          timeElapsed !== 0 || countdownTimer !== startingTime ? '120px' : '0'
+        })`,
+      }}
+    >
       <div className="flex flex-col items-center">
         <h3 className="sm:text-2xl text-xl">WPM</h3>
         <p className="text-green-400 text-xl">{wpm === Infinity ? '0' : wpm}</p>
