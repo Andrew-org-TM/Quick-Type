@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { authorizeToken } from '../store/slices/AuthSlice';
 import {
   CalculateWPM,
   calculateAccuracy,
   calculateRaw,
   keyPressData,
 } from '../helperFunctions';
-import { dataState } from '../store/slices/AuthSlice';
 import {
   toggleTimerActive,
   selectTimeElapsed,
@@ -42,7 +40,6 @@ const Timer = () => {
 
   const [timeRemaining, setTimeRemaining] = useState(15);
 
-  const userData = useAppSelector(dataState);
   const excessQuoteToType = useAppSelector(selectExcessQuoteToType);
   const timeElapsed = useAppSelector(selectTimeElapsed);
   const timerActive = useAppSelector(selectTimerActive);
@@ -74,20 +71,21 @@ const Timer = () => {
     // user has typed at least once and we are on countdown mode
     if (testComplete && userTextInput.length !== 0 && useCountdown) {
       async function dispatchData() {
-        if (userData) {
-          await dispatch(
-            addNewScore({
-              timeElapsed: startingTime,
-              totalKeysPressed,
-              incorrectKeys,
-              wpm,
-              raw,
-              accuracy,
-              language,
-              testType: 'time',
-              userId: userData.id,
-            })
-          );
+        // CHANGE THE BELOW LINE TO DISPATCH IF THE USER HAS AN ID BUT I"M PRETTY SURE IT CAN BE COMBINED INTO ONE CALL
+        if (false) {
+          // await dispatch(
+          //   addNewScore({
+          //     timeElapsed: startingTime,
+          //     totalKeysPressed,
+          //     incorrectKeys,
+          //     wpm,
+          //     raw,
+          //     accuracy,
+          //     language,
+          //     testType: 'time',
+          //     userId: userData.id,
+          //   })
+          // );
         } else {
           dispatch(
             addNewScore({
@@ -120,7 +118,6 @@ const Timer = () => {
         })
       );
     }
-    dispatch(authorizeToken());
   }, [testComplete]);
 
   useEffect(() => {

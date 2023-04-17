@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { authorizeToken } from '../store/slices/AuthSlice';
-import { dataState } from '../store/slices/AuthSlice';
+
 import {
   toggleTimerActive,
   selectTimeElapsed,
@@ -31,7 +30,6 @@ import { calculateAccuracy, calculateRaw } from '../helperFunctions';
 const Timer = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userData = useAppSelector(dataState);
   const timeElapsed = useAppSelector(selectTimeElapsed);
   const timerActive = useAppSelector(selectTimerActive);
   const quoteToType = useAppSelector(selectQuoteToType);
@@ -60,20 +58,20 @@ const Timer = () => {
     // dispatch(authorizeToken());
     if (testComplete && userTextInput.length !== 0 && !useCountdown) {
       async function dispatchData() {
-        if (userData) {
-          dispatch(
-            addNewScore({
-              timeElapsed,
-              totalKeysPressed,
-              incorrectKeys,
-              wpm,
-              raw,
-              accuracy,
-              language,
-              testType: 'words',
-              userId: userData.id,
-            })
-          );
+        if (false) {
+          // dispatch(
+          //   addNewScore({
+          //     timeElapsed,
+          //     totalKeysPressed,
+          //     incorrectKeys,
+          //     wpm,
+          //     raw,
+          //     accuracy,
+          //     language,
+          //     testType: 'words',
+          //     userId: userData.id,
+          //   })
+          // );
         } else {
           dispatch(
             addNewScore({
@@ -106,8 +104,6 @@ const Timer = () => {
         })
       );
     }
-
-    dispatch(authorizeToken());
   }, [testComplete]);
 
   useEffect(() => {

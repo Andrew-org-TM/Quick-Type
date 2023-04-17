@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import AuthSlice from './slices/AuthSlice';
 import StatSlice from './slices/StatSlice';
 import TypeInputSlice from './slices/TypeInputSlice';
 import formatSlice from './slices/formatSlice';
+import AuthSlice from './slices/AuthSlice';
 
 const store = configureStore({
   reducer: {
-    auth: AuthSlice,
     typeInput: TypeInputSlice,
     statSlice: StatSlice,
     format: formatSlice,
+    auth: AuthSlice,
   },
 });
 
