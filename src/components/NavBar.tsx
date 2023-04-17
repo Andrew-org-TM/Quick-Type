@@ -2,17 +2,27 @@ import React, { useEffect } from 'react';
 import keyboardIcon from '../assets/icons8-keyboard-64.png';
 import barChartIcon from '../assets/bar-chart-icon.svg';
 import accountIcon from '../assets/account-icon.svg';
-import { authorizeToken } from '../store/slices/AuthSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Link } from 'react-router-dom';
 import NavLink from './NavLink';
+import supabase from '../supabaseConfig';
+import { setUser } from '../store/slices/AuthSlice';
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+
+  console.log('user redux', user);
 
   useEffect(() => {
-    // checks the token on reload and adds user data to the state for posting later
-    // dispatch(authorizeToken());
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        console.log('<><><><><>');
+        dispatch(setUser(session.user));
+      } else {
+        console.log('IM OUT');
+      }
+    });
   }, []);
 
   return (
