@@ -17,7 +17,14 @@ export interface Stat {
   accuracy: number;
   testType: TestType;
   language: Language;
-  userId?: number;
+  userId?: string;
+}
+
+export interface KeyPresses {
+  correct: number;
+  incorrect: number;
+  skipped: number;
+  extra: number;
 }
 
 interface InitStatState {
@@ -33,6 +40,16 @@ interface InitStatState {
   wpm: number;
   accuracy: number;
   skippedCharacters: number;
+  raw: number;
+  score: ScoreTracker[];
+}
+
+export interface ScoreTracker {
+  errors: number;
+  wpm: number;
+  raw: number;
+  time: number;
+  totalKeysPressed: number;
 }
 
 const initialState: InitStatState = {
@@ -40,13 +57,25 @@ const initialState: InitStatState = {
   timerActive: false,
   totalKeysPressed: 0,
   incorrectKeys: 0,
-  countdownTimer: 30,
-  startingTime: 30,
-  useCountdown: false,
+  countdownTimer: 15,
+  startingTime: 15,
+  useCountdown: true,
   language: 'English',
   wpm: 0,
   accuracy: 0,
   skippedCharacters: 0,
+  raw: 0,
+  score: [{ errors: 0, wpm: 0, raw: 0, time: 0, totalKeysPressed: 0 }],
+  lastTest: {
+    accuracy: 0,
+    wpm: 0,
+    raw: 0,
+    testType: 'time',
+    language: 'English',
+    timeElapsed: 0,
+    totalKeysPressed: 0,
+    incorrectKeys: 0,
+  },
 };
 
 export const addNewScore = createAsyncThunk(
@@ -57,7 +86,6 @@ export const addNewScore = createAsyncThunk(
         `https://quick-type-1tb5.onrender.com/api/score`,
         body
       );
-      // console.log('axios post score data', data);
       return data;
     } catch (e) {
       return rejectWithValue(e);
@@ -86,8 +114,13 @@ const StatSlice = createSlice({
       state.timerActive = false;
       state.timeElapsed = 0;
       state.incorrectKeys = 0;
+      state.skippedCharacters = 0;
       state.countdownTimer = state.startingTime;
       state.lastTest = undefined;
+      state.wpm = 0;
+      state.score = [
+        { errors: 0, wpm: 0, raw: 0, time: 0, totalKeysPressed: 0 },
+      ];
     },
     incrementIncorrectKeys(state, action: PayloadAction<number>) {
       state.incorrectKeys += action.payload;
@@ -116,6 +149,18 @@ const StatSlice = createSlice({
     adjustAccuracy(state, action: PayloadAction<number>) {
       state.accuracy = action.payload;
     },
+    adjustRaw(state: InitStatState, action: PayloadAction<number>) {
+      state.raw = action.payload;
+    },
+    pushScore(state: InitStatState, action: PayloadAction<ScoreTracker>) {
+      state.score.push(action.payload);
+    },
+    setLastTest(state: InitStatState, action: PayloadAction<Stat>) {
+      state.lastTest = action.payload;
+    },
+    setIncorrectKeys(state: InitStatState, action: PayloadAction<number>) {
+      state.incorrectKeys = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -140,6 +185,10 @@ export const {
   changeTestLangauge,
   adjustWpm,
   adjustAccuracy,
+  adjustRaw,
+  pushScore,
+  setLastTest,
+  setIncorrectKeys,
 } = StatSlice.actions;
 
 export const selectTimeElapsed = (state: RootState) =>
@@ -160,4 +209,5 @@ export const selectLanguage = (state: RootState) => state.statSlice.language;
 export const selectWpm = (state: RootState) => state.statSlice.wpm;
 export const selectAccuracy = (state: RootState) => state.statSlice.accuracy;
 export const selectLastTest = (state: RootState) => state.statSlice.lastTest;
+export const selectCurrentScores = (state: RootState) => state.statSlice.score;
 export default StatSlice.reducer;

@@ -1,51 +1,54 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import {
-  logInUser,
-  authorizeToken,
-  rejectedState,
-} from '../store/slices/AuthSlice';
+
 import { useNavigate } from 'react-router-dom';
+import supabase from '../supabaseConfig';
+import { selectAuthUser } from '../store/slices/AuthSlice';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const user = useAppSelector(selectAuthUser);
 
-  const rejectState = useAppSelector(rejectedState);
+  useEffect(() => {
+    if (user.id) {
+      navigate('/');
+    }
+  }, [user]);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await dispatch(
-      logInUser({
-        username,
-        password,
-      })
-    );
-    await dispatch(authorizeToken());
-    setUsername('');
-    setPassword('');
-    const token = localStorage.getItem('token');
-    if (token !== '[object Object]') {
-      navigate('/');
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (data.user && !error) {
+      setEmail('');
+      setPassword('');
     }
+
+    if (error) console.log(error);
+  };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) console.log('Signout Error:', error);
   };
 
   return (
-    <div>
-      {rejectState === 'Rejected' ? (
-        <div className="text-white block">Invalid Username/Password </div>
-      ) : (
-        <div></div>
-      )}
-      <h1 className="text-white block">LOGIN </h1>
+    <div className="flex flex-col items-center">
+      <h1 className="text-white block py-5">LOGIN</h1>
       <form className="text-black" id="form1" onSubmit={handleSubmit}>
-        <label className="text-white block"> USERNAME</label>
+        <label className="text-white block">EMAIL</label>
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <label className="text-white block"> PASSWORD</label>
         <input
@@ -54,8 +57,16 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </form>
-      <button type="submit" form="form1" value="Submit" className="text-white">
+      <button
+        type="submit"
+        form="form1"
+        value="Submit"
+        className="text-white border-2 p-3 my-3"
+      >
         Submit
+      </button>
+      <button className="border-2 p-2" onClick={handleLogout}>
+        Logout
       </button>
     </div>
   );

@@ -16,6 +16,9 @@ import {
 } from '../store/slices/StatSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useNavigate } from 'react-router-dom';
+import { focusTextArea } from '../helperFunctions';
+import { resetFormatState } from '../store/slices/formatSlice';
+
 const NewTestButton = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,7 +36,7 @@ const NewTestButton = () => {
 
   return (
     <button
-      className="border-2 px-6 py-2 rounded-lg my-5 mx-auto block"
+      className="border-2 px-6 py-2 rounded-lg my-5 mx-auto block hover:bg-gray-700 active:bg-gray-700 transition-all"
       onClick={() => {
         dispatch(setUserTextInput(''));
         dispatch(setQuoteToType(duplicateQuoteToType));
@@ -44,10 +47,12 @@ const NewTestButton = () => {
         dispatch(
           setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading')
         );
+        dispatch(resetFormatState());
+        focusTextArea();
         navigate('/');
       }}
     >
-      Reset Test
+      New Test
     </button>
   );
 };

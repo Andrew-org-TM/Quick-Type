@@ -6,6 +6,10 @@ import LoginForm from './components/LoginForm';
 import NavBar from './components/NavBar';
 import Results from './components/Results';
 import NewTestButton from './components/NewTestButton';
+import LineChart from './components/LineChart';
+import KeysPieChart from './components/KeysPieChart';
+import DispatchStats from './components/DispatchStats';
+import Leaderboards from './components/Leaderboards';
 
 function App() {
   return (
@@ -16,6 +20,7 @@ function App() {
         <Route path="/" element={<InputForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/results" element={<Results />} />
+        <Route path="/leaderboards" element={<Leaderboards />} />
       </Routes>
       <NewTestButton />
     </div>
