@@ -8,11 +8,13 @@ import Results from './components/Results';
 import NewTestButton from './components/NewTestButton';
 import LineChart from './components/LineChart';
 import KeysPieChart from './components/KeysPieChart';
+import DispatchStats from './components/DispatchStats';
 
 function App() {
   return (
     <div className="max-w-7xl mx-auto text-gray-300">
       <NavBar />
+      <DispatchStats />
       <Routes>
         <Route path="signup" element={<SignupForm />} />
         <Route path="/" element={<InputForm />} />
