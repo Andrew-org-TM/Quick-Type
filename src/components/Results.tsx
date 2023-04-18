@@ -47,7 +47,8 @@ const Results = () => {
           <SingleResult stat={Math.round(wpm)} statName="WPM" />
           <SingleResult
             stat={
-              accuracy < 0.7 ? 'Too low' : `${(accuracy * 100).toFixed(0)}%`
+              // accuracy < 0.7 ? 'Too low' : `${(accuracy * 100).toFixed(0)}%`
+              `${(accuracy * 100).toFixed(0)}%`
             }
             statName="Accuracy"
           />
