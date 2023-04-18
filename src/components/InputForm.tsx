@@ -35,6 +35,7 @@ import Countdown from './Countdown';
 import TestStatHeader from './TestStatHeader';
 import OptionsMenu from './OptionsMenu';
 import { useNavigate } from 'react-router-dom';
+import supabase from '../supabaseConfig';
 
 const InputForm = () => {
   const dispatch = useAppDispatch();

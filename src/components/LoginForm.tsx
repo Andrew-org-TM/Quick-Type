@@ -19,8 +19,6 @@ const LoginForm = () => {
     });
 
     if (data.user) {
-      console.log('signed in data:', data);
-
       setEmail('');
       setPassword('');
     }
