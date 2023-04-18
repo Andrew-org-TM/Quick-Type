@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Link } from 'react-router-dom';
 import NavLink from './NavLink';
 import supabase from '../supabaseConfig';
+import { User } from '@supabase/supabase-js';
 import { setUser } from '../store/slices/AuthSlice';
 
 const NavBar = () => {
@@ -17,12 +18,22 @@ const NavBar = () => {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
-        console.log('<><><><><>');
         dispatch(setUser(session.user));
       } else {
-        console.log('IM OUT');
+        dispatch(setUser({} as User));
       }
     });
+
+    // const fetch = async () => {
+    //   // const { data, error } = (await supabase.from('scores').select()).count;
+    //   const { data, error, count } = await supabase
+    //     .from('scores')
+    //     .select('*', { count: 'exact', head: true });
+
+    //   console.log('rowCount:', count);
+    //   // console.log('e÷rror:', error);
+    // };
+    // fetch();
   }, []);
 
   return (
@@ -44,8 +55,8 @@ const NavBar = () => {
             altText="Bar chart icon"
             link="/Leaderboards"
           />
-          {/* <NavLink link="/login" linkName="Login" />
-          <NavLink link="/signup" linkName="Signup" /> */}
+          <NavLink link="/login" linkName="Login" />
+          <NavLink link="/signup" linkName="Signup" />
           <NavLink
             linkName="Account"
             imgUrl={accountIcon}
