@@ -8,8 +8,6 @@ const KeysPieChart = () => {
     localStorage.getItem('keyPresses') || '{}'
   );
 
-  console.log(window.innerWidth);
-
   const data = [
     {
       id: 'Correct',
