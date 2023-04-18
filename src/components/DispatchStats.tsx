@@ -23,6 +23,7 @@ import {
 } from '../store/slices/TypeInputSlice';
 import { calculateAccuracy, calculateRaw } from '../helperFunctions';
 import supabase from '../supabaseConfig';
+import { selectAuthUser } from '../store/slices/AuthSlice';
 
 const DispatchStats = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ const DispatchStats = () => {
   const language = useAppSelector(selectLanguage);
   const startingTime = useAppSelector(selectStartingTime);
   const countdownTimer = useAppSelector(selectCountdownTimer);
+  const user = useAppSelector(selectAuthUser);
 
   useEffect(() => {
     const accuracy = calculateAccuracy(
@@ -53,49 +55,21 @@ const DispatchStats = () => {
       const raw = calculateRaw(totalKeysPressed, timeElapsed);
       dispatch(adjustRaw(raw));
       async function dispatchData() {
-        if (false) {
-          // dispatch(
-          //   addNewScore({
-          //     timeElapsed,
-          //     totalKeysPressed,
-          //     incorrectKeys,
-          //     wpm,
-          //     raw,
-          //     accuracy,
-          //     language,
-          //     testType: 'words',
-          //     userId: userData.id,
-          //   })
-          // );
-        } else {
-          dispatch(
-            addNewScore({
-              timeElapsed,
-              totalKeysPressed,
-              incorrectKeys,
-              wpm,
-              raw,
-              accuracy,
-              language,
-              testType: 'words',
-            })
-          );
-        }
         const { error, data: newScore } = await supabase
           .from('scores')
           .insert({
             wpm,
             testType: 'words',
-            timeElapsed,
+            timeElapsed: startingTime,
             incorrectKeys,
             totalKeysPressed,
             language,
             accuracy,
             raw,
+            userId: user.id,
           })
-          .select();
-
-        console.log('NEWSCORE', newScore);
+          .select()
+          .single();
       }
 
       dispatchData();
@@ -123,37 +97,26 @@ const DispatchStats = () => {
       dispatch(adjustRaw(raw));
 
       async function dispatchData() {
-        // CHANGE THE BELOW LINE TO DISPATCH IF THE USER HAS AN ID BUT I"M PRETTY SURE IT CAN BE COMBINED INTO ONE CALL
-        if (false) {
-          // await dispatch(
-          //   addNewScore({
-          //     timeElapsed: startingTime,
-          //     totalKeysPressed,
-          //     incorrectKeys,
-          //     wpm,
-          //     raw,
-          //     accuracy,
-          //     language,
-          //     testType: 'time',
-          //     userId: userData.id,
-          //   })
-          // );
-        } else {
-          dispatch(
-            addNewScore({
-              timeElapsed: startingTime,
-              totalKeysPressed,
-              incorrectKeys,
-              wpm,
-              raw,
-              accuracy,
-              language,
-              testType: 'time',
-            })
-          );
-        }
+        const { error, data: newScore } = await supabase
+          .from('scores')
+          .insert({
+            wpm,
+            testType: 'time',
+            timeElapsed,
+            incorrectKeys,
+            totalKeysPressed,
+            language,
+            accuracy,
+            raw,
+            userId: user.id,
+          })
+          .select()
+          .single();
+
+        console.log('time score', newScore);
       }
       dispatchData();
+
       if (countdownTimer !== startingTime) {
         localStorage.setItem(
           'lastTest',
