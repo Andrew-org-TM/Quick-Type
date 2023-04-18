@@ -70,6 +70,7 @@ const DispatchStats = () => {
           })
           .select()
           .single();
+        console.log('time score', newScore);
       }
 
       dispatchData();

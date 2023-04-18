@@ -36,6 +36,7 @@ import TestStatHeader from './TestStatHeader';
 import OptionsMenu from './OptionsMenu';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supabaseConfig';
+import DispatchStats from './DispatchStats';
 
 const InputForm = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +75,7 @@ const InputForm = () => {
     dispatch(setUserTextInput(''));
     dispatch(setQuoteToType(duplicateQuoteToType));
     dispatch(setExcessQuoteToType(''));
-    dispatch(fetchAllQuotes());
+    // dispatch(fetchAllQuotes());
     dispatch(
       setQuoteToType(
         randomWordList.slice(0, numOfWordsToType).join(' ') || 'Loading'
@@ -83,6 +84,7 @@ const InputForm = () => {
     dispatch(setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading'));
     // dispatch(setTestComplete(false));
     dispatch(resetStats());
+
     return () => {
       dispatch(setTestComplete(false));
     };
@@ -132,6 +134,8 @@ const InputForm = () => {
     <>
       <TestStatHeader />
       <OptionsMenu />
+      <DispatchStats />
+
       <div className="flex flex-col gap-4 text-white">
         {useCountdown ? <Countdown /> : <Timer />}
         <div

@@ -32,7 +32,7 @@ const Timer = () => {
   useEffect(() => {
     if (testComplete && userTextInput.length > 0 && useCountdown) {
       navigate('/results');
-      dispatch(setTestComplete(false));
+      // dispatch(setTestComplete(false));
     }
   }, [testComplete, userTextInput]);
 
@@ -59,7 +59,7 @@ const Timer = () => {
   }, [timerActive, countdownTimer]);
 
   useEffect(() => {
-    if (countdownTimer <= 0 && useCountdown) {
+    if (countdownTimer === 0 && useCountdown) {
       dispatch(toggleTimerActive(false));
       dispatch(setTestComplete(true));
     }

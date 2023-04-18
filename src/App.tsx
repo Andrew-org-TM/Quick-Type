@@ -9,19 +9,18 @@ import NewTestButton from './components/NewTestButton';
 import LineChart from './components/LineChart';
 import KeysPieChart from './components/KeysPieChart';
 import DispatchStats from './components/DispatchStats';
+import Leaderboards from './components/Leaderboards';
 
 function App() {
   return (
     <div className="max-w-7xl mx-auto text-gray-300">
       <NavBar />
-      <DispatchStats />
       <Routes>
         <Route path="signup" element={<SignupForm />} />
         <Route path="/" element={<InputForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/results" element={<Results />} />
-        <Route path="graph" element={<LineChart />} />
-        <Route path="keys" element={<KeysPieChart />} />
+        <Route path="/leaderboards" element={<Leaderboards />} />
       </Routes>
       <NewTestButton />
     </div>
