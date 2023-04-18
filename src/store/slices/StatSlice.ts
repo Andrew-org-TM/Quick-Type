@@ -17,7 +17,7 @@ export interface Stat {
   accuracy: number;
   testType: TestType;
   language: Language;
-  userId?: number;
+  userId?: string;
 }
 
 export interface KeyPresses {
