@@ -3,12 +3,20 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supabaseConfig';
+import { selectAuthUser } from '../store/slices/AuthSlice';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const user = useAppSelector(selectAuthUser);
+
+  useEffect(() => {
+    if (user.id) {
+      navigate('/');
+    }
+  }, [user]);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -18,7 +26,7 @@ const LoginForm = () => {
       password,
     });
 
-    if (data.user) {
+    if (data.user && !error) {
       setEmail('');
       setPassword('');
     }
