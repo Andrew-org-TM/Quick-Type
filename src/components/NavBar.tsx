@@ -7,13 +7,11 @@ import { Link } from 'react-router-dom';
 import NavLink from './NavLink';
 import supabase from '../supabaseConfig';
 import { User } from '@supabase/supabase-js';
-import { setUser } from '../store/slices/AuthSlice';
+import { setUser, setUsername } from '../store/slices/AuthSlice';
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-
-  console.log('user redux', user);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -23,18 +21,19 @@ const NavBar = () => {
         dispatch(setUser({} as User));
       }
     });
-
-    // const fetch = async () => {
-    //   // const { data, error } = (await supabase.from('scores').select()).count;
-    //   const { data, error, count } = await supabase
-    //     .from('scores')
-    //     .select('*', { count: 'exact', head: true });
-
-    //   console.log('rowCount:', count);
-    //   // console.log('e÷rror:', error);
-    // };
-    // fetch();
   }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (user.id) {
+        const { data, error } = await supabase.from('users').select().single();
+
+        if (!error) dispatch(setUsername(data.username));
+        else if (error) console.log('error getting username', error);
+      }
+    };
+    fetch();
+  }, [user]);
 
   return (
     <div className="text-white">
@@ -55,14 +54,28 @@ const NavBar = () => {
             altText="Bar chart icon"
             link="/Leaderboards"
           />
-          <NavLink link="/login" linkName="Login" />
-          <NavLink link="/signup" linkName="Signup" />
-          <NavLink
-            linkName="Account"
-            imgUrl={accountIcon}
-            altText="Account user icon"
-            link="/account"
-          />
+          {!user.id ? (
+            <>
+              <NavLink link="/login" linkName="Login" />
+              <NavLink link="/signup" linkName="Signup" />
+            </>
+          ) : (
+            <>
+              <NavLink
+                linkName="Account"
+                imgUrl={accountIcon}
+                altText="Account user icon"
+                link="/account"
+              />
+              <button
+                onClick={() => {
+                  supabase.auth.signOut();
+                }}
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </nav>
     </div>
