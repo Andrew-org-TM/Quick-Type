@@ -1,124 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import {
-  CalculateWPM,
-  calculateAccuracy,
-  calculateRaw,
-  keyPressData,
-} from '../helperFunctions';
+
 import {
   toggleTimerActive,
   selectTimeElapsed,
-  adjustTime,
   selectTimerActive,
-  selectTotalKeysPressed,
-  selectIncorrectKeys,
-  addNewScore,
   selectCountdownTimer,
   adjustCountdown,
-  selectUseCountdown,
-  selectStartingTime,
-  adjustWpm,
-  adjustAccuracy,
-  selectWpm,
-  adjustRaw,
-  selectLanguage,
 } from '../store/slices/StatSlice';
 import {
   selectTestComplete,
   selectQuoteToType,
   selectUserTextInput,
-  selectDuplicateQuoteToType,
   setTestComplete,
-  selectExcessQuoteToType,
 } from '../store/slices/TypeInputSlice';
 
 const Timer = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [timeRemaining, setTimeRemaining] = useState(15);
-
-  const excessQuoteToType = useAppSelector(selectExcessQuoteToType);
   const timeElapsed = useAppSelector(selectTimeElapsed);
   const timerActive = useAppSelector(selectTimerActive);
   const quoteToType = useAppSelector(selectQuoteToType);
   const userTextInput = useAppSelector(selectUserTextInput);
-  const totalKeysPressed = useAppSelector(selectTotalKeysPressed);
-  const duplicateQuoteToType = useAppSelector(selectDuplicateQuoteToType);
-  const incorrectKeys = useAppSelector(selectIncorrectKeys);
   const testComplete = useAppSelector(selectTestComplete);
   const countdownTimer = useAppSelector(selectCountdownTimer);
-  const useCountdown = useAppSelector(selectUseCountdown);
-  const startingTime = useAppSelector(selectStartingTime);
-  const wpm = useAppSelector(selectWpm);
-  const language = useAppSelector(selectLanguage);
-
-  useEffect(() => {
-    const raw = calculateRaw(totalKeysPressed, startingTime);
-    dispatch(adjustRaw(raw));
-
-    const accuracy = calculateAccuracy(
-      totalKeysPressed,
-      incorrectKeys,
-      userTextInput
-    );
-
-    dispatch(adjustAccuracy(accuracy));
-
-    // Dispatch adding the score to the datbase once test is complete (clock hits 0),
-    // user has typed at least once and we are on countdown mode
-    if (testComplete && userTextInput.length !== 0 && useCountdown) {
-      async function dispatchData() {
-        // CHANGE THE BELOW LINE TO DISPATCH IF THE USER HAS AN ID BUT I"M PRETTY SURE IT CAN BE COMBINED INTO ONE CALL
-        if (false) {
-          // await dispatch(
-          //   addNewScore({
-          //     timeElapsed: startingTime,
-          //     totalKeysPressed,
-          //     incorrectKeys,
-          //     wpm,
-          //     raw,
-          //     accuracy,
-          //     language,
-          //     testType: 'time',
-          //     userId: userData.id,
-          //   })
-          // );
-        } else {
-          dispatch(
-            addNewScore({
-              timeElapsed: startingTime,
-              totalKeysPressed,
-              incorrectKeys,
-              wpm,
-              raw,
-              accuracy,
-              language,
-              testType: 'time',
-            })
-          );
-        }
-      }
-      dispatchData();
-    }
-    if (countdownTimer !== startingTime) {
-      localStorage.setItem(
-        'lastTest',
-        JSON.stringify({
-          timeElapsed: startingTime,
-          totalKeysPressed,
-          incorrectKeys,
-          wpm,
-          raw,
-          accuracy,
-          language,
-          testType: 'time',
-        })
-      );
-    }
-  }, [testComplete]);
 
   useEffect(() => {
     if (testComplete && userTextInput.length > 0) {

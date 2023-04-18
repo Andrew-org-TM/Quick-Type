@@ -9,23 +9,16 @@ import {
   selectTimerActive,
   selectTotalKeysPressed,
   selectIncorrectKeys,
-  addNewScore,
   selectUseCountdown,
   selectWpm,
-  selectAccuracy,
-  adjustWpm,
-  adjustAccuracy,
-  adjustRaw,
   selectLanguage,
 } from '../store/slices/StatSlice';
 import {
   selectTestComplete,
   selectQuoteToType,
   selectUserTextInput,
-  selectDuplicateQuoteToType,
   setTestComplete,
 } from '../store/slices/TypeInputSlice';
-import { calculateAccuracy, calculateRaw } from '../helperFunctions';
 
 const Timer = () => {
   const dispatch = useAppDispatch();
@@ -34,77 +27,8 @@ const Timer = () => {
   const timerActive = useAppSelector(selectTimerActive);
   const quoteToType = useAppSelector(selectQuoteToType);
   const userTextInput = useAppSelector(selectUserTextInput);
-  const totalKeysPressed = useAppSelector(selectTotalKeysPressed);
-  const incorrectKeys = useAppSelector(selectIncorrectKeys);
   const testComplete = useAppSelector(selectTestComplete);
   const useCountdown = useAppSelector(selectUseCountdown);
-  const wpm = useAppSelector(selectWpm);
-  const language = useAppSelector(selectLanguage);
-
-  useEffect(() => {
-    const raw = calculateRaw(totalKeysPressed, timeElapsed);
-    dispatch(adjustRaw(raw));
-
-    const accuracy = calculateAccuracy(
-      totalKeysPressed,
-      incorrectKeys,
-      userTextInput
-    );
-
-    dispatch(adjustAccuracy(accuracy));
-
-    // Dispatch adding the score to the datbase once test is complete (user reaches the end of the test),
-    // user has typed at least once and we are on countdown mode
-    // dispatch(authorizeToken());
-    if (testComplete && userTextInput.length !== 0 && !useCountdown) {
-      async function dispatchData() {
-        if (false) {
-          // dispatch(
-          //   addNewScore({
-          //     timeElapsed,
-          //     totalKeysPressed,
-          //     incorrectKeys,
-          //     wpm,
-          //     raw,
-          //     accuracy,
-          //     language,
-          //     testType: 'words',
-          //     userId: userData.id,
-          //   })
-          // );
-        } else {
-          dispatch(
-            addNewScore({
-              timeElapsed,
-              totalKeysPressed,
-              incorrectKeys,
-              wpm,
-              raw,
-              accuracy,
-              language,
-              testType: 'words',
-            })
-          );
-        }
-      }
-      dispatchData();
-    }
-    if (timeElapsed > 0) {
-      localStorage.setItem(
-        'lastTest',
-        JSON.stringify({
-          timeElapsed,
-          totalKeysPressed,
-          incorrectKeys,
-          wpm,
-          raw,
-          accuracy,
-          language,
-          testType: 'words',
-        })
-      );
-    }
-  }, [testComplete]);
 
   useEffect(() => {
     if (testComplete && userTextInput.length > 0) {
