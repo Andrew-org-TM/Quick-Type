@@ -29,6 +29,8 @@ const NewTestButton = () => {
   const language = useAppSelector(selectLanguage);
   const randomWordList = useAppSelector(selectRandomWords);
 
+  const [focused, setFocused] = useState<boolean>(false);
+
   useEffect(() => {
     dispatch(setQuoteToType(randomWordList.join(' ') || 'Loading'));
     dispatch(setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading'));
@@ -36,7 +38,7 @@ const NewTestButton = () => {
 
   return (
     <button
-      className="border-2 px-6 py-2 rounded-lg my-5 mx-auto block hover:bg-gray-700 active:bg-gray-700 transition-all"
+      className="my-6 mx-auto block w-48 rounded bg-emerald-600 py-2 text-lg font-bold tracking-wide text-slate-100 transition-all duration-100 hover:bg-emerald-800 focus:bg-emerald-900"
       onClick={() => {
         dispatch(setUserTextInput(''));
         dispatch(setQuoteToType(duplicateQuoteToType));

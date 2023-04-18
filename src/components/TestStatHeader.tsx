@@ -165,7 +165,7 @@ const TestStatHeader = () => {
 
   return (
     <div
-      className="text-center px-4 flex justify-center text-white gap-16 items-center transition-all duration-500"
+      className="flex items-center justify-center gap-16 px-4 text-center text-white transition-all duration-500"
       style={{
         transform: `translate(0,${
           timeElapsed !== 0 || countdownTimer !== startingTime ? '120px' : '0'
@@ -173,8 +173,8 @@ const TestStatHeader = () => {
       }}
     >
       <div className="flex flex-col items-center">
-        <h3 className="sm:text-2xl text-xl">WPM</h3>
-        <p className="text-green-400 text-xl">{wpm === Infinity ? '0' : wpm}</p>
+        <h3 className="text-xl sm:text-2xl">WPM</h3>
+        <p className="text-xl text-green-400">{wpm === Infinity ? '0' : wpm}</p>
       </div>
       <div className="flex flex-col items-center text-3xl sm:text-4xl">
         <h3>{useCountdown ? 'Time Remaining' : 'Time Elapsed'}</h3>
@@ -183,8 +183,8 @@ const TestStatHeader = () => {
         </p>
       </div>
       <div className="flex flex-col items-center">
-        <h3 className="sm:text-2xl text-xl">Errors</h3>
-        <p className="text-red-400 text-xl">{incorrectKeys}</p>
+        <h3 className="text-xl sm:text-2xl">Errors</h3>
+        <p className="text-xl text-red-400">{incorrectKeys}</p>
       </div>
     </div>
   );

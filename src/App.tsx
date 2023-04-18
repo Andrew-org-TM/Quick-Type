@@ -6,14 +6,11 @@ import LoginForm from './components/LoginForm';
 import NavBar from './components/NavBar';
 import Results from './components/Results';
 import NewTestButton from './components/NewTestButton';
-import LineChart from './components/LineChart';
-import KeysPieChart from './components/KeysPieChart';
-import DispatchStats from './components/DispatchStats';
 import Leaderboards from './components/Leaderboards';
 
 function App() {
   return (
-    <div className="max-w-7xl mx-auto text-gray-300">
+    <div className="mx-auto max-w-7xl text-emerald-600">
       <NavBar />
       <Routes>
         <Route path="signup" element={<SignupForm />} />
@@ -22,7 +19,6 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="/leaderboards" element={<Leaderboards />} />
       </Routes>
-      <NewTestButton />
     </div>
   );
 }

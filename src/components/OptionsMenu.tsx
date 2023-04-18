@@ -106,7 +106,7 @@ const OptionsMenu = () => {
 
   return (
     <div
-      className={`flex justify-center max-w-3xl mx-auto py-8 text-white gap-4 transition-all duration-500 ${
+      className={`mx-auto flex max-w-3xl justify-center gap-4 py-8 text-gray-300 transition-all duration-500 ${
         timeElapsed !== 0 || countdownTimer !== startingTime
           ? 'opacity-0 '
           : 'opacity-100'

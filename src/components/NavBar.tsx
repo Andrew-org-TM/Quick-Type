@@ -37,17 +37,17 @@ const NavBar = () => {
 
   return (
     <div className="text-white">
-      <nav className="px-6 pt-3 flex justify-between">
+      <nav className="flex justify-between px-6 pt-3">
         <Link to={'/'}>
-          <div className="flex items-center gap-4">
-            <img src={keyboardIcon} alt="Keyboard icon" />
-            <h1 className="text-4xl text-white font-bold tracking-wide">
+          <div className="flex items-center gap-2">
+            <img className="w-12" src={keyboardIcon} alt="Keyboard icon" />
+            <h1 className="text-2xl font-bold tracking-wide text-gray-300">
               QuickType
-              <span className="text-sm text-gray-400">(beta v0.3)</span>
+              <span className="text-xs text-gray-400">(beta v0.3)</span>
             </h1>
           </div>
         </Link>
-        <div className="hidden lg:flex gap-4">
+        <div className="hidden gap-4 lg:flex">
           <NavLink
             linkName="leaderboards"
             imgUrl={barChartIcon}
