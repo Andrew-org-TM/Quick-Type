@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {
-  toggleTimerActive,
   selectTimeElapsed,
-  adjustTime,
   selectTimerActive,
   selectTotalKeysPressed,
   selectIncorrectKeys,
-  addNewScore,
   selectUseCountdown,
   selectCountdownTimer,
   selectStartingTime,

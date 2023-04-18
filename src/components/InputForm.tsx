@@ -81,7 +81,7 @@ const InputForm = () => {
       )
     );
     dispatch(setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading'));
-    dispatch(setTestComplete(false));
+    // dispatch(setTestComplete(false));
     dispatch(resetStats());
     return () => {
       dispatch(setTestComplete(false));
@@ -92,10 +92,6 @@ const InputForm = () => {
     dispatch(setQuoteToType(randomWordList.join(' ') || 'Loading'));
     dispatch(setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading'));
   }, [useCountdown, numOfWordsToType, language]);
-
-  useEffect(() => {
-    dispatch(setTestComplete(quoteToType.length === userTextInput.length));
-  }, [quoteToType, userTextInput]);
 
   useEffect(() => {
     if (

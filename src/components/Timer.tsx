@@ -31,7 +31,7 @@ const Timer = () => {
   const useCountdown = useAppSelector(selectUseCountdown);
 
   useEffect(() => {
-    if (testComplete && userTextInput.length > 0) {
+    if (testComplete && userTextInput.length > 0 && !useCountdown) {
       navigate('/results');
       dispatch(setTestComplete(false));
     }
@@ -61,6 +61,12 @@ const Timer = () => {
     }
     return () => clearInterval(interval);
   }, [timerActive, timeElapsed]);
+
+  useEffect(() => {
+    if (!useCountdown) {
+      dispatch(setTestComplete(quoteToType.length === userTextInput.length));
+    }
+  }, [quoteToType, userTextInput]);
 
   return <div>{/* <p>{timeElapsed}</p> */}</div>;
 };

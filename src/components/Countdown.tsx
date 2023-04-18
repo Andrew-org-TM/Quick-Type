@@ -8,6 +8,7 @@ import {
   selectTimerActive,
   selectCountdownTimer,
   adjustCountdown,
+  selectUseCountdown,
 } from '../store/slices/StatSlice';
 import {
   selectTestComplete,
@@ -26,9 +27,10 @@ const Timer = () => {
   const userTextInput = useAppSelector(selectUserTextInput);
   const testComplete = useAppSelector(selectTestComplete);
   const countdownTimer = useAppSelector(selectCountdownTimer);
+  const useCountdown = useAppSelector(selectUseCountdown);
 
   useEffect(() => {
-    if (testComplete && userTextInput.length > 0) {
+    if (testComplete && userTextInput.length > 0 && useCountdown) {
       navigate('/results');
       dispatch(setTestComplete(false));
     }
@@ -57,7 +59,7 @@ const Timer = () => {
   }, [timerActive, countdownTimer]);
 
   useEffect(() => {
-    if (countdownTimer <= 0) {
+    if (countdownTimer <= 0 && useCountdown) {
       dispatch(toggleTimerActive(false));
       dispatch(setTestComplete(true));
     }
