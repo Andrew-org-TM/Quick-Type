@@ -5,6 +5,7 @@ import { BarLoader } from 'react-spinners';
 import { useNavigate, Link } from 'react-router-dom';
 import supabase from '../supabaseConfig';
 import { selectAuthUser } from '../store/slices/AuthSlice';
+import { User } from '@supabase/supabase-js';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string>('');
-  const user = useAppSelector(selectAuthUser);
+  const user: User = useAppSelector(selectAuthUser);
 
   useEffect(() => {
     if (user.id) {
@@ -81,9 +82,15 @@ const LoginForm = () => {
         </button>
       </form>
       <Link to={'/signup'}>
-        <p className="text-center">
+        <p className="mb-4 text-center">
           Don't have an account?{' '}
           <span className="text-emerald-400 underline">sign up</span>
+        </p>
+      </Link>
+      <Link to={'/reset'}>
+        <p className="text-center">
+          Forgot Password?{' '}
+          <span className="text-emerald-400 underline ">reset here</span>
         </p>
       </Link>
       {/* <button className="border-2 p-2" onClick={handleLogout}>
