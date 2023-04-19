@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { deletePress, keyPress } from '../keyPressFunction';
+import NewTestButton from './NewTestButton';
 import {
   selectTestComplete,
   setTestComplete,
@@ -35,6 +36,8 @@ import Countdown from './Countdown';
 import TestStatHeader from './TestStatHeader';
 import OptionsMenu from './OptionsMenu';
 import { useNavigate } from 'react-router-dom';
+import supabase from '../supabaseConfig';
+import DispatchStats from './DispatchStats';
 
 const InputForm = () => {
   const dispatch = useAppDispatch();
@@ -73,15 +76,16 @@ const InputForm = () => {
     dispatch(setUserTextInput(''));
     dispatch(setQuoteToType(duplicateQuoteToType));
     dispatch(setExcessQuoteToType(''));
-    dispatch(fetchAllQuotes());
+    // dispatch(fetchAllQuotes());
     dispatch(
       setQuoteToType(
         randomWordList.slice(0, numOfWordsToType).join(' ') || 'Loading'
       )
     );
     dispatch(setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading'));
-    dispatch(setTestComplete(false));
+    // dispatch(setTestComplete(false));
     dispatch(resetStats());
+
     return () => {
       dispatch(setTestComplete(false));
     };
@@ -91,10 +95,6 @@ const InputForm = () => {
     dispatch(setQuoteToType(randomWordList.join(' ') || 'Loading'));
     dispatch(setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading'));
   }, [useCountdown, numOfWordsToType, language]);
-
-  useEffect(() => {
-    dispatch(setTestComplete(quoteToType.length === userTextInput.length));
-  }, [quoteToType, userTextInput]);
 
   useEffect(() => {
     if (
@@ -135,17 +135,19 @@ const InputForm = () => {
     <>
       <TestStatHeader />
       <OptionsMenu />
+      <DispatchStats />
+
       <div className="flex flex-col gap-4 text-white">
         {useCountdown ? <Countdown /> : <Timer />}
         <div
           id="test-box"
-          className={`relative px-8 text-3xl self-start border-2 border-transparent min-w-full h-28 overflow-hidden`}
+          className={`relative h-28 min-w-full self-start overflow-hidden border-2 border-transparent px-8 text-3xl`}
         >
           <TypeBoxText />
           <textarea
             value={userTextInput}
             id="type-test"
-            className="border-2 border-white opacity-0 w-full h-full text-2xl rounded absolute py-4 px-8 left-0 top-0 "
+            className="absolute left-0 top-0 h-full w-full rounded border-2 border-white py-4 px-8 text-2xl opacity-0 "
             onChange={(e) => {
               setChangeEvent(e.target.value.slice(-1));
             }}
@@ -156,6 +158,7 @@ const InputForm = () => {
           />
         </div>
       </div>
+      <NewTestButton />
     </>
   );
 

@@ -8,10 +8,10 @@ interface NavLinkProps {
   link: string;
 }
 
-const NavLink = (props: NavLinkProps) => {
+const NavLinkMain = (props: NavLinkProps) => {
   return (
     <Link to={props.link}>
-      <div className="flex items-center rounded py-1 font-bold">
+      <div className="flex items-center rounded bg-emerald-600 px-4 py-1 font-bold">
         {props.imgUrl && (
           <img className="w-8" src={props.imgUrl} alt={props.altText} />
         )}
@@ -21,4 +21,4 @@ const NavLink = (props: NavLinkProps) => {
   );
 };
 
-export default NavLink;
+export default NavLinkMain;

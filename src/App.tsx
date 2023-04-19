@@ -6,22 +6,21 @@ import LoginForm from './components/LoginForm';
 import NavBar from './components/NavBar';
 import Results from './components/Results';
 import NewTestButton from './components/NewTestButton';
-import LineChart from './components/LineChart';
-import KeysPieChart from './components/KeysPieChart';
+import Leaderboards from './components/Leaderboards';
+import Account from './components/Account';
 
 function App() {
   return (
-    <div className="max-w-7xl mx-auto text-gray-300">
+    <div className="mx-auto max-w-7xl text-emerald-600">
       <NavBar />
       <Routes>
         <Route path="signup" element={<SignupForm />} />
         <Route path="/" element={<InputForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/results" element={<Results />} />
-        <Route path="graph" element={<LineChart />} />
-        <Route path="keys" element={<KeysPieChart />} />
+        <Route path="/leaderboards" element={<Leaderboards />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
-      <NewTestButton />
     </div>
   );
 }

@@ -21,8 +21,8 @@ const OptionButton = (props: ButtonProps) => {
         focusTextArea();
         dispatch(resetFormatState());
       }}
-      className={`border-2 px-2 py-1 text-sm text-gray-300 transition-all ${
-        !props.selected ? 'border-transparent' : ' border-gray-300'
+      className={`rounded border-2 px-2 py-1 text-sm text-gray-300 transition-all ${
+        !props.selected ? 'border-transparent' : ' border-emerald-600'
       }`}
     >
       {props.children}

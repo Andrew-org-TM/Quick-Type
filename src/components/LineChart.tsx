@@ -12,8 +12,6 @@ const LineChart = () => {
     localStorage.getItem('lineData') || '[{}]'
   );
 
-  console.log(window.innerWidth);
-
   const mappedWpm = lastTestScores?.map((s: ScoreTracker) => ({
     x: s.time,
     y: s.wpm,
