@@ -8,6 +8,7 @@ import NavLink from './NavLink';
 import supabase from '../supabaseConfig';
 import { User } from '@supabase/supabase-js';
 import { setUser, setUsername } from '../store/slices/AuthSlice';
+import NavLinkMain from './NavLinkMain';
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ const NavBar = () => {
   }, [user]);
 
   return (
-    <div className="text-white">
+    <div className="mb-2 text-gray-300">
       <nav className="flex justify-between px-6 pt-3">
         <Link to={'/'}>
           <div className="flex items-center gap-2">
@@ -47,26 +48,20 @@ const NavBar = () => {
             </h1>
           </div>
         </Link>
-        <div className="hidden gap-4 lg:flex">
-          <NavLink
-            linkName="leaderboards"
-            imgUrl={barChartIcon}
-            altText="Bar chart icon"
-            link="/Leaderboards"
-          />
+        <div className="hidden gap-6 lg:flex">
           {!user.id ? (
             <>
+              <NavLink
+                linkName="Leaderboards"
+                // imgUrl={barChartIcon}
+                // altText="Bar chart icon"
+                link="/Leaderboards"
+              />
               <NavLink link="/login" linkName="Login" />
-              <NavLink link="/signup" linkName="Signup" />
+              <NavLinkMain link="/signup" linkName="Sign Up" />
             </>
           ) : (
             <>
-              <NavLink
-                linkName="Account"
-                imgUrl={accountIcon}
-                altText="Account user icon"
-                link="/account"
-              />
               <button
                 onClick={() => {
                   supabase.auth.signOut();
@@ -74,6 +69,18 @@ const NavBar = () => {
               >
                 Logout
               </button>
+              <NavLink
+                linkName="Leaderboards"
+                // imgUrl={barChartIcon}
+                // altText="Bar chart icon"
+                link="/Leaderboards"
+              />
+              <NavLinkMain
+                linkName="Account"
+                // imgUrl={accountIcon}
+                // altText="Account user icon"
+                link="/account"
+              />
             </>
           )}
         </div>
