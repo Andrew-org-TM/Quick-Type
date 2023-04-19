@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import supabase from '../supabaseConfig';
-
-// const query = `
-// SELECT *, MAX(wpm) as max_wpm
-// FROM scores_with_usernames
-// GROUP BY usernames
-// `;
+import { useNavigate, Link } from 'react-router-dom';
 
 const Leaderboards = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchWpmLeaderboards = async () => {
       const { data, error } = await supabase.rpc('max_wpm' as never);
@@ -25,7 +22,17 @@ const Leaderboards = () => {
     fetchWpmLeaderboards();
   }, []);
 
-  return <div>Leaderboards</div>;
+  return (
+    <div className="mt-24 text-center text-gray-300">
+      <h1 className="mb-8 text-3xl">Leaderboards Coming Soon...</h1>
+      <h2 className="text-xl">
+        <Link to={'/signup'}>
+          <span className="text-emerald-600 underline">Sign up</span>{' '}
+        </Link>
+        for an account to be showcased when released!
+      </h2>
+    </div>
+  );
 };
 
 export default Leaderboards;
