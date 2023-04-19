@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import Results from './components/Results';
 import NewTestButton from './components/NewTestButton';
 import Leaderboards from './components/Leaderboards';
+import Account from './components/Account';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/results" element={<Results />} />
         <Route path="/leaderboards" element={<Leaderboards />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </div>
   );
