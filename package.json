@@ -11,6 +11,10 @@
     "gen-types": "npx supabase gen types typescript --linked > types/supabase.ts"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.1",
+    "@mui/x-data-grid": "^6.2.0",
     "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
     "@reduxjs/toolkit": "^1.9.3",
