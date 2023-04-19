@@ -20,8 +20,13 @@ import {
   selectTestComplete,
   selectQuoteToType,
   selectUserTextInput,
+  selectExcessQuoteToType,
 } from '../store/slices/TypeInputSlice';
-import { calculateAccuracy, calculateRaw } from '../helperFunctions';
+import {
+  calculateAccuracy,
+  calculateRaw,
+  keyPressData,
+} from '../helperFunctions';
 import supabase from '../supabaseConfig';
 import { selectAuthUser } from '../store/slices/AuthSlice';
 
@@ -38,6 +43,8 @@ const DispatchStats = () => {
   const startingTime = useAppSelector(selectStartingTime);
   const countdownTimer = useAppSelector(selectCountdownTimer);
   const user = useAppSelector(selectAuthUser);
+  const excessQuoteToType = useAppSelector(selectExcessQuoteToType);
+  const quoteToType = useAppSelector(selectQuoteToType);
 
   useEffect(() => {
     const accuracy = calculateAccuracy(
@@ -46,6 +53,12 @@ const DispatchStats = () => {
       userTextInput
     );
 
+    const endingKeyData = keyPressData(
+      userTextInput,
+      excessQuoteToType,
+      incorrectKeys,
+      quoteToType
+    );
     dispatch(adjustAccuracy(accuracy));
 
     // Dispatch adding the score to the datbase once test is complete (user reaches the end of the test),
@@ -60,13 +73,17 @@ const DispatchStats = () => {
           .insert({
             wpm,
             testType: 'words',
-            timeElapsed: startingTime,
+            timeElapsed,
             incorrectKeys,
             totalKeysPressed,
             language,
             accuracy,
             raw,
             userId: user.id,
+            endingCorrect: endingKeyData.correct,
+            endingSkipped: endingKeyData.skipped,
+            endingExtra: endingKeyData.extra,
+            endingIncorrect: endingKeyData.incorrect,
           })
           .select()
           .single();
@@ -86,6 +103,10 @@ const DispatchStats = () => {
             accuracy,
             language,
             testType: 'words',
+            endingCorrect: endingKeyData.correct,
+            endingSkipped: endingKeyData.skipped,
+            endingExtra: endingKeyData.extra,
+            endingIncorrect: endingKeyData.incorrect,
           })
         );
       }
@@ -103,13 +124,17 @@ const DispatchStats = () => {
           .insert({
             wpm,
             testType: 'time',
-            timeElapsed,
+            timeElapsed: startingTime,
             incorrectKeys,
             totalKeysPressed,
             language,
             accuracy,
             raw,
             userId: user.id,
+            endingCorrect: endingKeyData.correct,
+            endingSkipped: endingKeyData.skipped,
+            endingExtra: endingKeyData.extra,
+            endingIncorrect: endingKeyData.incorrect,
           })
           .select()
           .single();
@@ -130,6 +155,10 @@ const DispatchStats = () => {
             accuracy,
             language,
             testType: 'time',
+            endingCorrect: endingKeyData.correct,
+            endingSkipped: endingKeyData.skipped,
+            endingExtra: endingKeyData.extra,
+            endingIncorrect: endingKeyData.incorrect,
           })
         );
       }
