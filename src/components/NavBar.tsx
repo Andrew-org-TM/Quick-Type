@@ -9,10 +9,23 @@ import supabase from '../supabaseConfig';
 import { User } from '@supabase/supabase-js';
 import { setUser, setUsername } from '../store/slices/AuthSlice';
 import NavLinkMain from './NavLinkMain';
+import {
+  setUserTextInput,
+  setQuoteToType,
+  setExcessQuoteToType,
+  setDuplicateQuoteToType,
+  selectRandomWords,
+  selectDuplicateQuoteToType,
+} from '../store/slices/TypeInputSlice';
+import { resetFormatState } from '../store/slices/formatSlice';
+import { resetStats, adjustTime } from '../store/slices/StatSlice';
+import { focusTextArea } from '../helperFunctions';
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const randomWordList = useAppSelector(selectRandomWords);
+  const duplicateQuoteToType = useAppSelector(selectDuplicateQuoteToType);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -40,7 +53,23 @@ const NavBar = () => {
     <div className="mb-2 text-gray-300">
       <nav className="flex justify-between px-6 pt-3">
         <Link to={'/'}>
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            onClick={() => {
+              dispatch(setUserTextInput(''));
+              dispatch(setQuoteToType(duplicateQuoteToType));
+              dispatch(setExcessQuoteToType(''));
+              dispatch(adjustTime(0));
+              dispatch(resetStats());
+              dispatch(setQuoteToType(randomWordList.join(' ') || 'Loading'));
+              dispatch(
+                setDuplicateQuoteToType(randomWordList.join(' ') || 'Loading')
+              );
+              dispatch(resetFormatState());
+              focusTextArea();
+              // navigate('/');
+            }}
+          >
             <img className="w-12" src={keyboardIcon} alt="Keyboard icon" />
             <h1 className="text-2xl font-bold tracking-wide text-gray-300">
               QuickType
