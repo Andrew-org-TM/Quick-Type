@@ -160,7 +160,7 @@ const Account = () => {
             <p className="text-sm text-gray-300">
               Member Since {user?.created_at?.slice(0, 10)}
             </p>
-            <p className="">Test Taken: {rows.length}</p>
+            <p className="">Tests Taken: {rows.length}</p>
             <button
               className="flex items-center rounded bg-emerald-600 px-4 py-1 font-bold"
               onClick={() => {
