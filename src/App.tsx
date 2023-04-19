@@ -8,6 +8,8 @@ import Results from './components/Results';
 import NewTestButton from './components/NewTestButton';
 import Leaderboards from './components/Leaderboards';
 import Account from './components/Account';
+import ResetPassword from './components/ResetPassword';
+import SendRecovery from './components/SendRecovery';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="/leaderboards" element={<Leaderboards />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/reset" element={<SendRecovery />} />
+        <Route path="/reset/newpassword" element={<ResetPassword />} />
       </Routes>
     </div>
   );
