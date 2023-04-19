@@ -11,7 +11,7 @@ const SingleResult = (props: ResultProps) => {
       <h2 className="text-xl font-bold text-gray-300 sm:text-3xl">
         {props.statName}
       </h2>
-      <p className="text-lg font-bold  text-emerald-600 sm:text-2xl">
+      <p className="text-lg font-bold text-gray-300 sm:text-2xl">
         {props.stat}
       </p>
     </div>
