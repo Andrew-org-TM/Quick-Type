@@ -62,13 +62,6 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <button
-                onClick={() => {
-                  supabase.auth.signOut();
-                }}
-              >
-                Logout
-              </button>
               <NavLink
                 linkName="Leaderboards"
                 // imgUrl={barChartIcon}
