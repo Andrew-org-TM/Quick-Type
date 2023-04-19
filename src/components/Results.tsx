@@ -46,16 +46,20 @@ const Results = () => {
             <div className="hidden lg:block">
               <SingleResult stat={lastTest.testType} statName="Type" />
             </div>
-            <SingleResult stat={Math.round(wpm)} statName="WPM" />
+            <SingleResult stat={Math.round(lastTest.wpm)} statName="WPM" />
             <SingleResult
               stat={
                 // accuracy < 0.7 ? 'Too low' : `${(accuracy * 100).toFixed(0)}%`
-                `${(accuracy * 100).toFixed(0)}%`
+                `${
+                  typeof lastTest.accuracy === 'string'
+                    ? lastTest.accuracy
+                    : (accuracy * 100).toFixed(0) + '%'
+                }`
               }
               statName="Accuracy"
             />
-            <SingleResult stat={incorrectKeys} statName="Errors" />
-            <SingleResult stat={Math.round(raw)} statName="Raw" />
+            <SingleResult stat={lastTest.incorrectKeys} statName="Errors" />
+            <SingleResult stat={Math.round(lastTest.raw)} statName="Raw" />
             <div className="col-span-6 h-96 w-full bg-[#3a3f45] p-4 md:col-span-2 lg:col-span-5">
               <LineChart />
             </div>

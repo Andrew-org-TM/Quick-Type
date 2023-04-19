@@ -149,17 +149,17 @@ const TestStatHeader = () => {
         totalKeysPressed
       );
       localStorage.setItem('lineData', JSON.stringify(currentScores));
-      localStorage.setItem(
-        'keyPresses',
-        JSON.stringify(
-          keyPressData(
-            userTextInput,
-            excessQuoteToType,
-            incorrectKeys,
-            quoteToType
-          )
-        )
-      );
+      // localStorage.setItem(
+      //   'keyPresses',
+      //   JSON.stringify(
+      //     keyPressData(
+      //       userTextInput,
+      //       excessQuoteToType,
+      //       incorrectKeys,
+      //       quoteToType
+      //     )
+      //   )
+      // );
     }
   }, [testComplete]);
 

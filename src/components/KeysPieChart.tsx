@@ -2,32 +2,33 @@ import React from 'react';
 import { useAppSelector } from '../store/hooks';
 import { KeyPresses, Stat, selectLastTest } from '../store/slices/StatSlice';
 import { ResponsivePie } from '@nivo/pie';
+import { DatabaseScores } from '../store/slices/AuthSlice';
 
 const KeysPieChart = () => {
-  const keys: KeyPresses = JSON.parse(
-    localStorage.getItem('keyPresses') || '{}'
+  const keys: DatabaseScores = JSON.parse(
+    localStorage.getItem('lastTest') || '{}'
   );
 
   const data = [
     {
       id: 'Correct',
       label: 'Correct',
-      value: keys.correct,
+      value: keys.endingCorrect,
     },
     {
       id: 'Incorrect',
       label: 'Incorrect',
-      value: keys.incorrect,
+      value: keys.endingIncorrect,
     },
     {
       id: 'Extra',
       label: 'Extra',
-      value: keys.extra,
+      value: keys.endingExtra,
     },
     {
       id: 'Skipped',
       label: 'Skipped',
-      value: keys.skipped,
+      value: keys.endingSkipped,
     },
   ];
 
