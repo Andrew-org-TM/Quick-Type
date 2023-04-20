@@ -34,6 +34,7 @@ const Signup = () => {
   const [usernameError, setUsernameError] = useState<string>('');
   const [signupLoading, setSignupLoading] = useState<boolean>(false);
   const [signupError, setSignupError] = useState<string>('');
+  const [successfulSignup, setSuccessfulSignup] = useState<boolean>(false);
 
   const user = useAppSelector(selectAuthUser);
 
@@ -117,7 +118,7 @@ const Signup = () => {
           setUsernameError('');
           setSignupError('');
 
-          navigate('/newaccount');
+          setSuccessfulSignup(true);
         }
 
         if (error) {
@@ -147,6 +148,20 @@ const Signup = () => {
       navigate('/');
     }
   }, [user]);
+
+  if (successfulSignup) {
+    return (
+      <>
+        <h1 className="mt-24 text-center text-4xl text-emerald-500">
+          Check your email to verify account.
+        </h1>
+        <h2 className="pt-10  text-center text-2xl text-gray-300">
+          <span className="font-bold">Must verify</span> account in order to
+          sign in.
+        </h2>
+      </>
+    );
+  }
 
   return (
     <>

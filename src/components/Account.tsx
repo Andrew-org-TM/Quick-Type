@@ -19,11 +19,12 @@ import { useNavigate } from 'react-router-dom';
 
 let rows: any = [];
 let columns: GridColDef[] = [
-  { field: 'id' },
+  //   { field: 'id' },
   { field: 'wpm', headerName: 'Wpm', flex: 1 },
   { field: 'raw', headerName: 'Raw', flex: 1 },
   { field: 'accuracy', headerName: 'Accuracy', flex: 1 },
   { field: 'incorrectKeys', headerName: 'Errors', flex: 1 },
+  { field: 'language', headerName: 'language', flex: 1 },
   { field: 'created_at', flex: 1, width: 150, headerName: 'Date' },
 ];
 
@@ -97,7 +98,11 @@ const Account = () => {
                   border: 'none',
                   //   '&:nth-child(odd)': { backgroundColor: '#1e293b' },
                 },
+                '& .MuiDataGrid-row:hover': {
+                  backgroundColor: '#3b403c',
+                },
               },
+
               '& .MuiDataGrid-columnHeaders': {
                 backgroundColor: '#059669',
                 color: '#d1d5db',
