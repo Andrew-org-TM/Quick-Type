@@ -17,7 +17,6 @@ import {
 import { makeStyles } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-let rows: any = [];
 let columns: GridColDef[] = [
   //   { field: 'id' },
   { field: 'wpm', headerName: 'Wpm', flex: 1 },
@@ -39,7 +38,6 @@ const Account = () => {
   ): void => {
     const row = rows.find((row) => row.id === e.id);
 
-    console.log('row', row);
     localStorage.setItem(
       'lastTest',
       JSON.stringify({
