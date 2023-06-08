@@ -3,6 +3,7 @@ import StatSlice from './slices/StatSlice';
 import TypeInputSlice from './slices/TypeInputSlice';
 import formatSlice from './slices/formatSlice';
 import AuthSlice from './slices/AuthSlice';
+import leaderboardSlice from './slices/leaderboardSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     statSlice: StatSlice,
     format: formatSlice,
     auth: AuthSlice,
+    leaderboard: leaderboardSlice,
   },
 });
 

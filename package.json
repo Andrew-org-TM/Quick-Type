@@ -11,6 +11,10 @@
     "gen-types": "npx supabase gen types typescript --linked > types/supabase.ts"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.1",
+    "@mui/x-data-grid": "^6.2.0",
     "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
     "@reduxjs/toolkit": "^1.9.3",
@@ -26,6 +30,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
+    "react-spinners": "^0.13.8",
     "sequelize": "^6.29.1",
     "volleyball": "^1.5.1"
   },
@@ -36,7 +41,8 @@
     "autoprefixer": "^10.4.13",
     "nodemon": "^2.0.21",
     "postcss": "^8.4.21",
-    "prettier": "2.8.4",
+    "prettier": "^2.8.7",
+    "prettier-plugin-tailwindcss": "^0.2.7",
     "supabase-cli": "^0.0.21",
     "tailwindcss": "^3.2.7",
     "typescript": "^4.9.5",

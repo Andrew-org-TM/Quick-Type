@@ -1,16 +1,20 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-
-import { useNavigate } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { BarLoader } from 'react-spinners';
+import { useNavigate, Link } from 'react-router-dom';
 import supabase from '../supabaseConfig';
 import { selectAuthUser } from '../store/slices/AuthSlice';
+import { User } from '@supabase/supabase-js';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const user = useAppSelector(selectAuthUser);
+  const [loginLoading, setLoginLoading] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<string>('');
+  const user: User = useAppSelector(selectAuthUser);
 
   useEffect(() => {
     if (user.id) {
@@ -21,6 +25,7 @@ const LoginForm = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
+    setLoginLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -31,7 +36,11 @@ const LoginForm = () => {
       setPassword('');
     }
 
-    if (error) console.log(error);
+    if (error) {
+      console.log(error.message);
+      setLoginError(error.message);
+    }
+    setLoginLoading(false);
   };
 
   const handleLogout = async () => {
@@ -41,33 +50,52 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-white block py-5">LOGIN</h1>
-      <form className="text-black" id="form1" onSubmit={handleSubmit}>
-        <label className="text-white block">EMAIL</label>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label className="text-white block"> PASSWORD</label>
-        <input
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+    <div className="mt-24 flex flex-col items-center text-gray-300">
+      <h1 className="pb-8 text-3xl font-bold">Login</h1>
+      {loginError && <h3 className="text-red-300">{loginError}</h3>}
+      <form className="w-96" id="form1" onSubmit={handleSubmit}>
+        <div>
+          <label className="block">Email</label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="my-2 h-10 w-full rounded border-2 border-gray-400 bg-[#25282c] pl-3 text-xl brightness-75"
+          />
+        </div>
+        <div>
+          <label className="block">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="my-2 h-10 w-full rounded border-2 border-gray-400 bg-[#25282c] pl-3 text-xl brightness-75"
+          />
+        </div>
+        <button
+          type="submit"
+          form="form1"
+          value="Submit"
+          className="my-6 w-full rounded bg-emerald-600 py-2 text-lg font-bold tracking-wide text-slate-100 transition-all duration-100 hover:bg-emerald-800"
+        >
+          {loginLoading ? <BarLoader /> : <p>Submit</p>}
+        </button>
       </form>
-      <button
-        type="submit"
-        form="form1"
-        value="Submit"
-        className="text-white border-2 p-3 my-3"
-      >
-        Submit
-      </button>
-      <button className="border-2 p-2" onClick={handleLogout}>
+      <Link to={'/signup'}>
+        <p className="mb-4 text-center">
+          Don't have an account?{' '}
+          <span className="text-emerald-400 underline">sign up</span>
+        </p>
+      </Link>
+      <Link to={'/reset'}>
+        <p className="text-center">
+          Forgot Password?{' '}
+          <span className="text-emerald-400 underline ">reset here</span>
+        </p>
+      </Link>
+      {/* <button className="border-2 p-2" onClick={handleLogout}>
         Logout
-      </button>
+      </button> */}
     </div>
   );
 };
