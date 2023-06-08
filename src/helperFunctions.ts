@@ -248,7 +248,7 @@ function remakeQuoteString(
 function generateTest(state: RootState): string[] {
   let wordsToGenerate;
   if (state.statSlice.useCountdown) {
-    wordsToGenerate = 100;
+    wordsToGenerate = 200;
   } else {
     wordsToGenerate = state.typeInput.numOfWordsToType;
   }
