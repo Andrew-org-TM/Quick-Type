@@ -92,13 +92,15 @@ const OptionsMenu = () => {
 
     const lastWordsSelected =
       parseInt(localStorage.getItem('words') ?? '') || undefined;
+
+    console.log('lastWordsSelected', lastWordsSelected);
+
     const lastTimeSelected =
       parseInt(localStorage.getItem('time') ?? '') || undefined;
 
     if (lastTimeSelected) {
       setTimes({ ...times, activeTime: lastTimeSelected });
     }
-
     if (lastWordsSelected) {
       setWords({ ...words, activeWords: lastWordsSelected });
     }
@@ -111,6 +113,14 @@ const OptionsMenu = () => {
   useEffect(() => {
     dispatch(changeTestLangauge(languages.activeLanguage));
   }, [languages]);
+
+  useEffect(() => {
+    dispatch(setTestTime(times.activeTime));
+  }, [times]);
+
+  useEffect(() => {
+    dispatch(setTestWords(words.activeWords));
+  }, [words]);
 
   function toggleMode(id: Mode): void {
     setModes((prev) => ({ ...prev, activeMode: id }));
