@@ -10,21 +10,36 @@ import Leaderboards from './components/Leaderboards';
 import Account from './components/Account';
 import ResetPassword from './components/ResetPassword';
 import SendRecovery from './components/SendRecovery';
+import { useEffect, useState } from 'react';
+import About from './components/About';
 
 function App() {
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMounted(true);
+    }, 1000);
+  }, []);
+
   return (
     <div className="mx-auto max-w-7xl text-emerald-600">
       <NavBar />
-      <Routes>
-        <Route path="signup" element={<SignupForm />} />
-        <Route path="/" element={<InputForm />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/results" element={<Results />} />
-        <Route path="/leaderboards" element={<Leaderboards />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/reset" element={<SendRecovery />} />
-        <Route path="/reset/newpassword" element={<ResetPassword />} />
-      </Routes>
+
+      {/* <p className={`${mounted ? 'hidden' : ''}`}>LOADING...</p> */}
+      <div className={`${!mounted ? 'hidden' : ''}`}>
+        <Routes>
+          <Route path="signup" element={<SignupForm />} />
+          <Route path="/" element={<InputForm />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/leaderboards" element={<Leaderboards />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/reset" element={<SendRecovery />} />
+          <Route path="/reset/newpassword" element={<ResetPassword />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
     </div>
   );
 }

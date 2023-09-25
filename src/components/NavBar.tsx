@@ -77,6 +77,7 @@ const NavBar = () => {
           </div>
         </Link>
         <div className="hidden gap-6 lg:flex">
+          <NavLink link="/about" linkName="About" />
           {!user.id ? (
             <>
               <NavLink
