@@ -9,12 +9,15 @@ import {
 } from '../store/slices/TypeInputSlice';
 import { selectUseCountdown } from '../store/slices/StatSlice';
 import { adjustTranslate, resetFormatState } from '../store/slices/formatSlice';
+import { focusTextArea } from '../helperFunctions';
 
 const LINE_HEIGHT = 36;
 const TEXT_PADDDING_X = 32;
 
 const TypeBoxText = () => {
   const dispatch = useAppDispatch();
+
+  const [mounted, setMounted] = useState<boolean>(false);
 
   const quote = document.getElementById('quote-hidden');
   const STARTING_QUOTE_Y = quote?.getBoundingClientRect().y || 362;
@@ -68,8 +71,29 @@ const TypeBoxText = () => {
           quote?.children[userTextInput.length]?.getBoundingClientRect().x
         );
       setCursorYPos(quote?.children[0]?.getBoundingClientRect().y || 0);
-    }, 0);
+    }, 100);
+    setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      const quote = document.getElementById('quote-hidden');
+
+      const newCursorXPos =
+        quote?.children[userTextInput.length]?.getBoundingClientRect().x;
+
+      const newCursorYPos = quote?.children[0]?.getBoundingClientRect().y;
+
+      setTimeout(() => {
+        // setCursorXPos(newCursorXPos || 0);
+        // setCursorYPos(newCursorYPos || 0);
+        console.log('xPos', newCursorXPos);
+        console.log('quote', quote);
+        console.log('quote rect', quote?.getBoundingClientRect());
+        focusTextArea();
+      }, 1000);
+    }
+  }, [mounted]);
 
   const letterColor = (idx: number): string => {
     if (idx > userTextInput.length - 1 || isSkippedLetter(idx)) {

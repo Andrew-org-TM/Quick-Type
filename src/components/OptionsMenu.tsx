@@ -93,8 +93,6 @@ const OptionsMenu = () => {
     const lastWordsSelected =
       parseInt(localStorage.getItem('words') ?? '') || undefined;
 
-    console.log('lastWordsSelected', lastWordsSelected);
-
     const lastTimeSelected =
       parseInt(localStorage.getItem('time') ?? '') || undefined;
 
