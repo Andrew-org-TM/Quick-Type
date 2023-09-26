@@ -73,6 +73,38 @@ const OptionsMenu = () => {
   });
 
   useEffect(() => {
+    // Pull previous test options from local storage
+    const lastLanguageSelected = localStorage.getItem('language');
+    if (lastLanguageSelected) {
+      setLanguages({
+        ...languages,
+        activeLanguage: lastLanguageSelected as Languages,
+      });
+    }
+
+    const lastModeSelected = localStorage.getItem('mode');
+    if (lastModeSelected) {
+      setModes({
+        ...modes,
+        activeMode: lastModeSelected as Mode,
+      });
+    }
+
+    const lastWordsSelected =
+      parseInt(localStorage.getItem('words') ?? '') || undefined;
+
+    const lastTimeSelected =
+      parseInt(localStorage.getItem('time') ?? '') || undefined;
+
+    if (lastTimeSelected) {
+      setTimes({ ...times, activeTime: lastTimeSelected });
+    }
+    if (lastWordsSelected) {
+      setWords({ ...words, activeWords: lastWordsSelected });
+    }
+  }, []);
+
+  useEffect(() => {
     dispatch(changeMode(modes.activeMode));
   }, [modes]);
 
@@ -80,28 +112,40 @@ const OptionsMenu = () => {
     dispatch(changeTestLangauge(languages.activeLanguage));
   }, [languages]);
 
+  useEffect(() => {
+    dispatch(setTestTime(times.activeTime));
+  }, [times]);
+
+  useEffect(() => {
+    dispatch(setTestWords(words.activeWords));
+  }, [words]);
+
   function toggleMode(id: Mode): void {
     setModes((prev) => ({ ...prev, activeMode: id }));
     dispatch(resetStats());
     dispatch(resetUserInput());
+    localStorage.setItem('mode', id);
   }
 
   function toggleLanguage(id: Languages): void {
     setLanguages((prev) => ({ ...prev, activeLanguage: id }));
     dispatch(resetUserInput());
     dispatch(resetStats());
+    localStorage.setItem('language', id);
   }
   function toggleTime(id: number): void {
     setTimes((prev) => ({ ...prev, activeTime: id }));
     dispatch(resetStats());
     dispatch(resetUserInput());
     dispatch(setTestTime(id));
+    localStorage.setItem('time', String(id));
   }
   function toggleWord(id: number): void {
     setWords((prev) => ({ ...prev, activeWords: id }));
     dispatch(resetStats());
     dispatch(resetUserInput());
     dispatch(setTestWords(id));
+    localStorage.setItem('words', String(id));
   }
 
   return (

@@ -10,6 +10,8 @@ import Leaderboards from './components/Leaderboards';
 import Account from './components/Account';
 import ResetPassword from './components/ResetPassword';
 import SendRecovery from './components/SendRecovery';
+import { useEffect, useState } from 'react';
+import About from './components/About';
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/reset" element={<SendRecovery />} />
         <Route path="/reset/newpassword" element={<ResetPassword />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );

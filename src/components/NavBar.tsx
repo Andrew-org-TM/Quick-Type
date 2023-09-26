@@ -73,11 +73,11 @@ const NavBar = () => {
             <img className="w-12" src={keyboardIcon} alt="Keyboard icon" />
             <h1 className="text-2xl font-bold tracking-wide text-gray-300">
               QuickType
-              <span className="text-xs text-gray-400">(beta v0.3)</span>
             </h1>
           </div>
         </Link>
         <div className="hidden gap-6 lg:flex">
+          <NavLink link="/about" linkName="About" />
           {!user.id ? (
             <>
               <NavLink
