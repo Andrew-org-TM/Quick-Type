@@ -87,9 +87,6 @@ const TypeBoxText = () => {
       setTimeout(() => {
         // setCursorXPos(newCursorXPos || 0);
         // setCursorYPos(newCursorYPos || 0);
-        console.log('xPos', newCursorXPos);
-        console.log('quote', quote);
-        console.log('quote rect', quote?.getBoundingClientRect());
         focusTextArea();
       }, 1000);
     }
@@ -150,7 +147,7 @@ const TypeBoxText = () => {
       </p>
       <p
         id="cursor"
-        className={`absolute animate-[cursor-blink_2s_infinite] text-emerald-400 transition-all duration-[100ms] ease-in-out`}
+        className={`duration-[100ms] absolute animate-[cursor-blink_2s_infinite] text-emerald-400 transition-all ease-in-out`}
         style={{
           left: `${cursorXPos - STARTING_QUOTE_X + TEXT_PADDDING_X - 5}px`,
           top: `${cursorYPos - STARTING_QUOTE_Y - 2}px`,
