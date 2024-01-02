@@ -55,6 +55,10 @@ const Leaderboards = () => {
   }, []);
 
   const renderCell = useCallback((row: LeaderboardRow, columnKey: Key) => {
+    if (typeof columnKey === 'bigint') {
+      console.error('Bigint is not supported as an index type');
+      return <p>Invalid column key</p>;
+    }
     switch (columnKey) {
       default:
         return <p className="text-left text-base">{row[columnKey]}</p>;
